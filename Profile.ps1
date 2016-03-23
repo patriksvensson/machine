@@ -54,19 +54,19 @@ Function Copy-CurrentLocation()
 }
 
 # Goes to the git repository directory.
-Function Enter-GitLocation()
+Function Enter-SourceLocation()
 {
-    if([string]::IsNullOrWhiteSpace($Global:GitLocation)) {
-        Write-Host "Git location has not been set."
+    if([string]::IsNullOrWhiteSpace($Global:SourceLocation)) {
+        Write-Host "Source location has not been set."
         return
     }
-    Set-Location $Global:GitLocation
+    Set-Location $Global:SourceLocation
 }
 
 # Aliases
 Set-Alias open start
 Set-Alias ccl Copy-CurrentLocation
-Set-Alias gg Enter-GitLocation
+Set-Alias gs Enter-SourceLocation
 Set-Alias fan fuck
 Set-Alias helvete fuck
 Set-Alias fan! fuck!

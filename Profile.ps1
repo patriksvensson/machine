@@ -1,4 +1,7 @@
-﻿# Load PoShGit
+﻿# Wrap the prompt by default.
+$Global:WrapPrompt = $true;
+
+# Load PoShGit
 $Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if($Global:PoShGitInstalled) {
     Import-Module posh-git
@@ -39,8 +42,22 @@ Function Global:Prompt()
         Write-VcsStatus
     }    
     
+    # Define the prompt.
+    $Prompt = " >";
+    
+    # Should we add a line break before the prompt?
+    if($Global:WrapPrompt -eq $true) {
+        $CursorPosition = $host.ui.rawui.CursorPosition.X
+        $BufferWidth = $Host.UI.RawUI.BufferSize.Width
+        $Threshold = $BufferWidth / 4;
+        if($CursorPosition -gt ($BufferWidth - $Threshold)) {
+            $Prompt = "$";
+            Write-Host ""  
+        }         
+    }
+    
     # Prompt
-    Write-Host " >" -n
+    Write-Host $Prompt -n -f ([ConsoleColor]::Green)
     $global:LASTEXITCODE = $REALLASTEXITCODE
     return " "
 }

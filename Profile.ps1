@@ -12,14 +12,6 @@ if($Global:PoShGitInstalled) {
     Write-Host "PoSh-Git has not been installed."
 }
 
-# Load PoShFuck
-$Global:PoShFuckInstalled = (Get-Module -ListAvailable -Name PoShFuck)
-if($Global:PoShFuckInstalled) {
-    Import-Module PoShFuck
-} else {
-    Write-Host "PoShFuck has not been installed.";
-}
-
 # The prompt
 Function Global:Prompt()
 {   
@@ -84,8 +76,4 @@ Function Enter-SourceLocation()
 Set-Alias open start
 Set-Alias ccl Copy-CurrentLocation
 Set-Alias gs Enter-SourceLocation
-Set-Alias fan fuck
-Set-Alias helvete fuck
-Set-Alias fan! fuck!
-Set-Alias helvete! fuck!
 Set-Alias build ./build.ps1

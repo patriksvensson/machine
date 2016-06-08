@@ -62,6 +62,7 @@ Function Copy-CurrentLocation()
     return $Result
 }
 
+# Creates a new directory and enters it.
 Function New-Directory([string]$Name)
 {
     $Directory = New-Item -Path $Name -ItemType Directory;

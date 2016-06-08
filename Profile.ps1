@@ -14,11 +14,11 @@ if($Global:PoShGitInstalled) {
 
 # The prompt
 Function Global:Prompt()
-{   
+{
     # Store the last exit code.
     $REALLASTEXITCODE = $LASTEXITCODE
 
-    # User and computer name        
+    # User and computer name
     Write-Host ([Environment]::UserName) -n -f ([ConsoleColor]::Cyan)
     Write-Host "@" -n
     Write-Host ([net.dns]::GetHostName()) -n -f ([ConsoleColor]::Green)
@@ -28,15 +28,15 @@ Function Global:Prompt()
     Write-Host "[" -nonewline -f ([ConsoleColor]::Yellow)
     Write-Host($pwd.ProviderPath) -nonewline
     Write-Host "]" -n -f ([ConsoleColor]::Yellow)
-    
+
     # Git status
     if($Global:PoShGitInstalled) {
         Write-VcsStatus
-    }    
-    
+    }
+
     # Define the prompt.
     $Prompt = " >";
-    
+
     # Should we add a line break before the prompt?
     if($Global:WrapPrompt -eq $true) {
         $CursorPosition = $host.ui.rawui.CursorPosition.X
@@ -44,10 +44,10 @@ Function Global:Prompt()
         $Threshold = $BufferWidth / 4;
         if($CursorPosition -gt ($BufferWidth - $Threshold)) {
             $Prompt = "$";
-            Write-Host ""  
-        }         
+            Write-Host ""
+        }
     }
-    
+
     # Prompt
     Write-Host $Prompt -n -f ([ConsoleColor]::Green)
     $global:LASTEXITCODE = $REALLASTEXITCODE
@@ -60,6 +60,14 @@ Function Copy-CurrentLocation()
     $Result = (Get-Location).Path | clip.exe
     Write-Host "Copied current location to clipboard."
     return $Result
+}
+
+Function New-Directory([string]$Name)
+{
+    $Directory = New-Item -Path $Name -ItemType Directory;
+    if(Test-Path $Directory) {
+        Set-Location $Name;
+    }
 }
 
 # Goes to the git repository directory.
@@ -76,4 +84,5 @@ Function Enter-SourceLocation()
 Set-Alias open start
 Set-Alias ccl Copy-CurrentLocation
 Set-Alias gs Enter-SourceLocation
+Set-Alias mcd New-Directory
 Set-Alias build ./build.ps1

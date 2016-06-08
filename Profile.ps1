@@ -1,7 +1,7 @@
 ﻿# Wrap the prompt by default.
 $Global:WrapPrompt = $true;
 
-# Load PoShGit
+# Load PoSh-Git.
 $Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if($Global:PoShGitInstalled) {
     Import-Module posh-git

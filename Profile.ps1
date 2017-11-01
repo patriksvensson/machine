@@ -21,9 +21,15 @@ Function Global:Prompt()
     # Not at top row? Check if we should insert a blank space.
     if($host.ui.rawui.CursorPosition.Y -ge 1) {
         $previous = $host.ui.rawui.CursorPosition.Y - 1
-        $rect = New-Object System.Management.Automation.Host.Rectangle(0, $previous, 1, $previous)
+        $rect = New-Object System.Management.Automation.Host.Rectangle(0, $previous, $host.UI.RawUI.BufferSize.Width, $previous)
         $content = $host.UI.RawUI.GetBufferContents($rect)
-        if($content.Character -ne " ") {
+        $writeNewLine = $false;
+        for ($i = 0; $i -lt $host.UI.RawUI.BufferSize.Width; $i++) {
+            if($content[$i, 0].Character -ne ' ' -and $content[$i, 0].Character -ne $null){
+                $writeNewLine = $true;
+            }
+        }
+        if($writeNewLine) {
             Write-Host ""
         }
     }

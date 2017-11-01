@@ -5,9 +5,9 @@ $Global:WrapPrompt = $true;
 $Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if($Global:PoShGitInstalled) {
     Import-Module posh-git
-    Pop-Location
-    Start-SshAgent -Quiet
     Push-Location
+    Start-SshAgent -Quiet
+    Pop-Location
 } else {
     Write-Host "PoSh-Git has not been installed."
 }
@@ -17,6 +17,16 @@ Function Global:Prompt()
 {
     # Store the last exit code.
     $REALLASTEXITCODE = $LASTEXITCODE
+
+    # Not at top row? Check if we should insert a blank space.
+    if($host.ui.rawui.CursorPosition.Y -ge 1) {
+        $previous = $host.ui.rawui.CursorPosition.Y - 1
+        $rect = New-Object System.Management.Automation.Host.Rectangle(0, $previous, 1, $previous)
+        $content = $host.UI.RawUI.GetBufferContents($rect)
+        if($content.Character -ne " ") {
+            Write-Host ""
+        }
+    }
 
     # User and computer name
     Write-Host ([Environment]::UserName) -n -f ([ConsoleColor]::Cyan)
@@ -34,22 +44,33 @@ Function Global:Prompt()
         Write-VcsStatus
     }
 
-    # Define the prompt.
-    $Prompt = " >";
+    # Show stack
+    if ((get-location -stack).Count -gt 0) {
+        write-host " " -NoNewLine
+        write-host (("+" * ((get-location -stack).Count))) -NoNewLine -ForegroundColor Cyan
+    }
 
-    # Should we add a line break before the prompt?
-    if($Global:WrapPrompt -eq $true) {
-        $CursorPosition = $host.ui.rawui.CursorPosition.X
-        $BufferWidth = $Host.UI.RawUI.BufferSize.Width
-        $Threshold = $BufferWidth / 4;
-        if($CursorPosition -gt ($BufferWidth - $Threshold)) {
-            $Prompt = "$";
-            Write-Host ""
-        }
+    # New line
+    Write-Host ""
+
+    # Print exit code
+    if ($REALLASTEXITCODE -ne 0) {
+        write-host " X $REALLASTEXITCODE " -NoNewLine -BackgroundColor DarkRed -ForegroundColor Yellow
+        write-host " " -NoNewline
     }
 
     # Prompt
-    Write-Host $Prompt -n -f ([ConsoleColor]::Green)
+    $windowsIdentity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $windowsPrincipal = new-object 'System.Security.Principal.WindowsPrincipal' $windowsIdentity
+    $IsAdministrator = $windowsPrincipal.IsInRole("Administrators") -eq 1;
+    $PromptColor = if ($IsAdministrator) {[ConsoleColor]::Red} Else {[ConsoleColor]::Green}
+    Write-Host "λ" -n -f ($PromptColor)
+
+    # Set the window title.
+    $CurrentPath = $pwd.ProviderPath
+    $WindowTitle = if ($IsAdministrator) {"[Admin] " + $CurrentPath} Else {$CurrentPath}
+    $host.UI.RawUI.WindowTitle = $WindowTitle;
+
     $global:LASTEXITCODE = $REALLASTEXITCODE
     return " "
 }
@@ -86,4 +107,5 @@ Set-Alias open start
 Set-Alias ccl Copy-CurrentLocation
 Set-Alias gs Enter-SourceLocation
 Set-Alias mcd New-Directory
+Set-Alias back popd
 Set-Alias build ./build.ps1

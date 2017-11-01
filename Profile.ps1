@@ -19,18 +19,21 @@ Function Global:Prompt()
     $REALLASTEXITCODE = $LASTEXITCODE
 
     # Not at top row? Check if we should insert a blank space.
-    if($host.ui.rawui.CursorPosition.Y -ge 1) {
-        $previous = $host.ui.rawui.CursorPosition.Y - 1
-        $rect = New-Object System.Management.Automation.Host.Rectangle(0, $previous, $host.UI.RawUI.BufferSize.Width, $previous)
+    if($host.UI.RawUI.CursorPosition.Y -ge 1) {
+        $previousX = $host.UI.RawUI.CursorPosition.X 
+        $previousY = $host.UI.RawUI.CursorPosition.Y - 1
+        $rect = New-Object System.Management.Automation.Host.Rectangle(0, $previousY, $host.UI.RawUI.BufferSize.Width, $previousY)
         $content = $host.UI.RawUI.GetBufferContents($rect)
         $writeNewLine = $false;
         for ($i = 0; $i -lt $host.UI.RawUI.BufferSize.Width; $i++) {
-            if($content[$i, 0].Character -ne ' ' -and $content[$i, 0].Character -ne $null){
+            $character = $content[$i, 0].Character
+            if($character -ne ' ' -and $character -ne $null){
                 $writeNewLine = $true;
+                break;
             }
         }
         if($writeNewLine) {
-            Write-Host ""
+            Write-Host "  "
         }
     }
 

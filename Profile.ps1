@@ -1,5 +1,6 @@
 ﻿# Wrap the prompt by default.
 $Global:WrapPrompt = $true;
+$Global:WindowTitle = $null;
 
 # Load PoSh-Git.
 $Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
@@ -76,9 +77,15 @@ Function Global:Prompt()
     Write-Host "λ" -n -f ($PromptColor)
 
     # Set the window title.
-    $CurrentPath = $pwd.ProviderPath
-    $WindowTitle = if ($IsAdministrator) {"[Admin] " + $CurrentPath} Else {$CurrentPath}
-    $host.UI.RawUI.WindowTitle = $WindowTitle;
+    if($Global:WindowTitle -eq $null) {
+        $CurrentPath = $pwd.ProviderPath
+        $CustomWindowTitle = if ($IsAdministrator) {"[Admin] " + $CurrentPath} Else {$CurrentPath}
+        $host.UI.RawUI.WindowTitle = $CustomWindowTitle;
+    }
+    else {
+        $CustomWindowTitle = if ($IsAdministrator) {"[Admin] " + $Global:WindowTitle} Else {$Global:WindowTitle}
+        $host.UI.RawUI.WindowTitle = $CustomWindowTitle;
+    }
 
     $global:LASTEXITCODE = $REALLASTEXITCODE
     return " "
@@ -111,6 +118,10 @@ Function Enter-SourceLocation()
     Set-Location $Global:SourceLocation
 }
 
+function Set-WindowTitle([string]$Title) {
+    $Global:WindowTitle = $Title;
+}
+
 # Aliases
 Set-Alias open start
 Set-Alias ccl Copy-CurrentLocation
@@ -118,3 +129,4 @@ Set-Alias gs Enter-SourceLocation
 Set-Alias mcd New-Directory
 Set-Alias back popd
 Set-Alias build ./build.ps1
+Set-Alias sw Set-WindowTitle 

@@ -6,9 +6,6 @@ $Global:WindowTitle = $null;
 $Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if($Global:PoShGitInstalled) {
     Import-Module posh-git
-    Push-Location
-    Start-SshAgent -Quiet
-    Pop-Location
 } else {
     Write-Host "PoSh-Git has not been installed."
 }

@@ -145,3 +145,4 @@ Set-Alias mcd New-Directory
 Set-Alias back popd
 Set-Alias build ./build.ps1
 Set-Alias sw Set-WindowTitle
+Set-Alias f Find-Files

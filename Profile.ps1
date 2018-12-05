@@ -89,8 +89,16 @@ Function Global:Prompt() {
 }
 
 function Set-As([Parameter(Mandatory = $true)][string]$Name) {
-    New-PSDrive -PSProvider FileSystem -Name $Name -Root . -Scope Global
+    New-PSDrive -PSProvider FileSystem -Name $Name -Root . -Scope Global | Out-Null
     Set-Location -LiteralPath "$($name):"
+}
+
+# Add virtual drives for projects
+function Add-VirtualDrive([string]$Path, [string]$Name) {
+    Push-Location
+    Set-Location $Path
+    Set-As $Name
+    Pop-Location
 }
 
 # Copies the current location to the clipboard.

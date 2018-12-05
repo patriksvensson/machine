@@ -88,6 +88,14 @@ Function Global:Prompt() {
     return " "
 }
 
+function Find-Files([string]$Pattern)
+{
+    if($null -ne $Pattern -and $Pattern -ne "") {
+        Get-Childitem -Include $Pattern -File -Recurse -ErrorAction SilentlyContinue `
+            | ForEach-Object { Resolve-Path -Relative $_ | Write-Host }
+    }
+}
+
 function Set-As([Parameter(Mandatory = $true)][string]$Name) {
     New-PSDrive -PSProvider FileSystem -Name $Name -Root . -Scope Global | Out-Null
     Set-Location -LiteralPath "$($name):"
@@ -136,4 +144,4 @@ Set-Alias gs Enter-SourceLocation
 Set-Alias mcd New-Directory
 Set-Alias back popd
 Set-Alias build ./build.ps1
-Set-Alias sw Set-WindowTitle 
+Set-Alias sw Set-WindowTitle

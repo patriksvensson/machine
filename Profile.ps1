@@ -124,13 +124,17 @@ Function New-Directory([string]$Name) {
     }
 }
 
-# Goes to the git repository directory.
-Function Enter-SourceLocation() {
-    if ([string]::IsNullOrWhiteSpace($Global:SourceLocation)) {
-        Write-Host "Source location has not been set."
+# Source location shortcuts.
+Function Enter-GitHubLocation { Enter-SourceLocation -Provider "GitHub" -Path $Global:SourceLocation }
+Function Enter-AzureDevOpsLocation { Enter-SourceLocation -Provider "Azure DevOps" -Path $Global:AzureDevOpsSourceLocation }
+Function Enter-BitBucketLocation { Enter-SourceLocation -Provider "BitBucket" -Path $Global:BitBucketSourceLocation }
+Function Enter-GitLabLocation { Enter-SourceLocation -Provider "GitLab" -Path $Global:GitLabSourceLocation }
+Function Enter-SourceLocation([string]$Provider,[string]$Path) {
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        Write-Host "The source location for $Provider have not been set."
         return
     }
-    Set-Location $Global:SourceLocation
+    Set-Location $Path
 }
 
 function Set-WindowTitle([string]$Title) {
@@ -140,7 +144,10 @@ function Set-WindowTitle([string]$Title) {
 # Aliases
 Set-Alias open start
 Set-Alias ccl Copy-CurrentLocation
-Set-Alias gs Enter-SourceLocation
+Set-Alias gs Enter-GitHubLocation
+Set-Alias gsa Enter-AzureDevOpsLocation
+Set-Alias gsb Enter-BitBucketLocation
+Set-Alias gsg Enter-GitLabLocation
 Set-Alias mcd New-Directory
 Set-Alias back popd
 Set-Alias build ./build.ps1

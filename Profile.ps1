@@ -18,14 +18,13 @@ Function Global:Prompt() {
 
     # Not at top row? Check if we should insert a blank space.
     if ($host.UI.RawUI.CursorPosition.Y -ge 1) {
-        $previousX = $host.UI.RawUI.CursorPosition.X 
         $previousY = $host.UI.RawUI.CursorPosition.Y - 1
         $rect = New-Object System.Management.Automation.Host.Rectangle(0, $previousY, $host.UI.RawUI.BufferSize.Width, $previousY)
         $content = $host.UI.RawUI.GetBufferContents($rect)
         $writeNewLine = $false;
         for ($i = 0; $i -lt $host.UI.RawUI.BufferSize.Width; $i++) {
             $character = $content[$i, 0].Character
-            if ($character -ne ' ' -and $character -ne $null) {
+            if ($character -ne ' ' -and $null -ne $character) {
                 $writeNewLine = $true;
                 break;
             }
@@ -88,7 +87,7 @@ Function Global:Prompt() {
     return " "
 }
 
-function Find-Files([string]$Pattern)
+Function Find-Files([string]$Pattern)
 {
     if($null -ne $Pattern -and $Pattern -ne "") {
         Get-Childitem -Include $Pattern -File -Recurse -ErrorAction SilentlyContinue `
@@ -96,13 +95,13 @@ function Find-Files([string]$Pattern)
     }
 }
 
-function Set-As([Parameter(Mandatory = $true)][string]$Name) {
+Function Set-As([Parameter(Mandatory = $true)][string]$Name) {
     New-PSDrive -PSProvider FileSystem -Name $Name -Root . -Scope Global | Out-Null
     Set-Location -LiteralPath "$($name):"
 }
 
 # Add virtual drives for projects
-function Add-VirtualDrive([string]$Path, [string]$Name) {
+Function Add-VirtualDrive([string]$Path, [string]$Name) {
     Push-Location
     Set-Location $Path
     Set-As $Name
@@ -137,8 +136,17 @@ Function Enter-SourceLocation([string]$Provider,[string]$Path) {
     Set-Location $Path
 }
 
-function Set-WindowTitle([string]$Title) {
+Function Set-WindowTitle([string]$Title) {
     $Global:WindowTitle = $Title;
+}
+
+# For fun
+Function Get-DadJoke 
+{
+    # Created by @steviecoaster
+    $header = @{ Accept = "application/json" }
+    $joke = Invoke-RestMethod -Uri "https://icanhazdadjoke.com/" -Method Get -Headers $header 
+    return $joke.joke
 }
 
 # Aliases

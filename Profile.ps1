@@ -39,27 +39,25 @@ Function Global:Prompt() {
     Write-Host "@" -n
     Write-Host ([net.dns]::GetHostName()) -n -f ([ConsoleColor]::Green)
 
+    # Current path
+    Write-Host " " -n
+    Write-Host "[" -nonewline -f ([ConsoleColor]::Yellow)
+    Write-Host($pwd.Path) -nonewline
+    Write-Host "]" -n -f ([ConsoleColor]::Yellow)
+
     # Git status
     if ($Global:PoShGitInstalled) {
         Write-VcsStatus
     }
 
-    # New line
-    Write-Host ""
-
-    # Current path
-    Write-Host "[" -nonewline -f ([ConsoleColor]::Yellow)
-    Write-Host($pwd.Path) -nonewline
-    Write-Host "]" -n -f ([ConsoleColor]::Yellow)
-
-    # New line
-    Write-Host ""
-
     # Show stack
     if ((get-location -stack).Count -gt 0) {
+        write-host " " -NoNewLine
         write-host (("+" * ((get-location -stack).Count))) -NoNewLine -ForegroundColor Cyan
-        write-host " " -NoNewline
     }
+
+    # New line
+    Write-Host ""
 
     # Print exit code
     if ($REALLASTEXITCODE -ne 0) {

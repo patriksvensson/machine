@@ -32,11 +32,12 @@
         {
             "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
             "name": "Windows PowerShell",
+            "colorScheme": "Patrik",
             "commandline": "powershell.exe",
-            "fontFace": "Cascadia Code PL",
+            "fontFace": "RobotoMono NF",
             "fontSize": 12,
             "useAcrylic": true,
-            "acrylicOpacity": 0.7,
+            "acrylicOpacity": 0.9,
             "scrollbarState": "visible",
             "snapOnInput": true
         },
@@ -56,6 +57,30 @@
             "hidden": true,
             "name": "Azure Cloud Shell",
             "source": "Windows.Terminal.Azure"
+        }
+    ],
+    "schemes": [
+        {
+            "name": "Patrik",
+            "background" : "#222632",
+            "black" : "#0C0C0C",
+            "blue" : "#4C98C8",
+            "foreground" : "#cccccc",
+            "green" : "#9ab35c",
+            "red" : "#E67179",
+            "white" : "#CCCCCC",
+            "yellow" : "#d3b026",
+            "cyan": "#6ec9c9",
+            "purple": "#6e3d6e",
+            "brightBlack": "#777777",
+            "brightBlue": "#62c3ff",
+            "brightCyan": "#5fdfdf",
+            "brightGreen": "#B9D770",
+            "brightPurple": "#854a85",
+            "brightRed": "#E67179",
+            "brightWhite": "#eeeeee",
+            "brightYellow": "#cab976",
+            "selectionBackground": "#CCCCCC"
         }
     ]
 }

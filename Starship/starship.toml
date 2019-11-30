@@ -1,0 +1,60 @@
+add_newline = true
+
+[character]
+symbol = "->"
+error_symbol = "X"
+use_symbol_for_status = true
+style_success = "bold green"
+style_failure = "bold red"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold blue"
+
+[dotnet]
+symbol = " "
+style = "dimmed blue"
+heuristic = true
+  
+[rust]
+style = "dimmed red"
+
+[nodejs]
+symbol = " "
+style = "dimmed green"
+
+[java]
+symbol = " "
+style = "dimmed purple"
+
+[git_branch]
+style = "bold green"
+
+[git_status]
+prefix = "|"
+suffix = " | "
+show_sync_count = true
+conflicted_count.enabled = true
+deleted_count.enabled = true
+modified_count.enabled = true
+stashed_count.enabled = true
+staged_count.enabled = true
+renamed_count.enabled = true
+untracked_count.enabled = true
+conflicted = "  "
+deleted = " 﫧"
+modified = "  "
+stashed = "  "
+staged = "  "
+renamed = "  "
+untracked = "  "
+
+[package]
+disabled = false
+symbol = " "
+style = "bold white"
+
+[time]
+disabled = false
+format = "%T"

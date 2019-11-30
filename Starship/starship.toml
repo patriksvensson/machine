@@ -1,7 +1,7 @@
 add_newline = true
 
 [character]
-symbol = "->"
+symbol = ""
 error_symbol = "X"
 use_symbol_for_status = true
 style_success = "bold green"

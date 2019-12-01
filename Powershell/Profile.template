@@ -3,8 +3,8 @@ $Global:AzureDevOpsSourceLocation = ""
 $Global:BitBucketSourceLocation = ""
 $Global:GitLabSourceLocation = ""
 
-. D:/Source/github/patriksvensson/posh-profile/Profile.ps1
-#. D:/Source/github/patriksvensson/posh-profile/Prompt.ps1
+# Load the profile
+. "<<PROFILE>>"
 
 Enter-GitHubLocation
 Clear-Host

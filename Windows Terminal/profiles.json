@@ -15,6 +15,12 @@
                 ]
             },
             {
+                "command": "closeTab",
+                "keys": [
+                    "ctrl+w"
+                ]
+            },
+            {
                 "command": "copy",
                 "keys": [
                     "ctrl+c"

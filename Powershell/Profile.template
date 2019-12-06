@@ -1,11 +1,16 @@
-$Global:SourceLocation = ""
-$Global:AzureDevOpsSourceLocation = ""
-$Global:BitBucketSourceLocation = ""
-$Global:GitLabSourceLocation = ""
+$Global:SourceLocation = "<<SOURCELOCATION>>"
+$Global:AzureDevOpsSourceLocation = "<<AZURELOCATION>>"
+$Global:BitBucketSourceLocation = "<<BITBUCKETLOCATION>>"
+$Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
 
 # Load the profile
 . "<<PROFILE>>"
 
 Enter-GitHubLocation
 Clear-Host
-Invoke-Expression (&starship init powershell)
+
+if (Test-Path -Path (Join-Path $env:USERPROFILE ".cargo/bin/starship.exe")) {
+    Write-Host "Initializing Starship... " -NoNewline
+    Invoke-Expression (&starship init powershell)
+    Write-Host "Done!" -ForegroundColor Green
+}

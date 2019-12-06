@@ -1,37 +1,48 @@
 Param(
-    [switch]$SkipFont,
-    [switch]$SkipWindowsTerminalProfile,
-    [switch]$SkipStarship,
-    [switch]$ForceProfile
+    [switch]$PowerShellProfile,
+    [switch]$Fonts,
+    [switch]$WindowsTerminalProfile,
+    [switch]$StarshipProfile,
+    [switch]$Force
 )
 
-# Load utilities.
-. ./Scripts/Utilities.ps1
+. (Join-Path $PWD "./Scripts/Fonts.ps1")
+. (Join-Path $PWD "./Scripts/Starship.ps1")
+. (Join-Path $PWD "./Scripts/Store.ps1")
+. (Join-Path $PWD "./Scripts/Terminal.ps1")
+. (Join-Path $PWD "./Scripts/Utilities.ps1")
 
-# Make sure all prereqs are there.
-if (!(Test-WindowsTerminal)) {
-    Throw "Windows Terminal have not been installed."
-}
-if (!(Test-Starship)) {
-    Throw "Starship have not been installed."
+#################################################################
+# POWERSHELL
+#################################################################
+
+if($PowerShellProfile.IsPresent) {
+    if(!(Test-Path $PROFILE) -or $Force.IsPresent) {
+        # Update PowerShell profile
+        Write-Host "Adding PowerShell profile...";
+        $PowerShellProfileTemplatePath = Join-Path $PWD "PowerShell/Profile.template";
+        $PowerShellProfilePath = (Join-Path $PWD "PowerShell/Roaming.ps1");
+        Copy-Item -Path $PowerShellProfileTemplatePath -Destination $PROFILE;
+        # Replace placeholder values
+        (Get-Content -path $PROFILE -Raw) -Replace '<<PROFILE>>', $PowerShellProfilePath | Set-Content -Path $PROFILE
+        (Get-Content -path $PROFILE -Raw) -Replace '<<SOURCELOCATION>>', "$($Global:SourceLocation)" | Set-Content -Path $PROFILE
+        (Get-Content -path $PROFILE -Raw) -Replace '<<AZURELOCATION>>', "$($Global:AzureDevOpsSourceLocation)" | Set-Content -Path $PROFILE
+        (Get-Content -path $PROFILE -Raw) -Replace '<<BITBUCKETLOCATION>>', "$($Global:BitBucketSourceLocation)" | Set-Content -Path $PROFILE
+        (Get-Content -path $PROFILE -Raw) -Replace '<<GITLABLOCATION>>', "$($Global:GitLabSourceLocation)" | Set-Content -Path $PROFILE
+    } else {
+        Write-Host "PowerShell profile already exist.";
+        Write-Host "Use the -Force switch to overwrite.";
+    }
 }
 
-# Make sure we're running as administrator.
-$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-if(!($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
-    Throw "This script requires administrator permissions."
-}
+#################################################################
+# WINDOWS TERMINAL
+#################################################################
 
-if(!(Test-Path $PROFILE) -or $ForceProfile.IsPresent) {
-    # Update PowerShell profile
-    Write-Host "Adding PowerShell profile..."
-    $PowerShellProfileTemplate = Join-Path $PWD "PowerShell/Profile.template";
-    $PowerShellProfile = Join-Path $PWD "PowerShell/Roaming.ps1"
-    (Get-Content -path $PowerShellProfileTemplate -Raw) -replace '<<PROFILE>>', $PowerShellProfile `
-        | Set-Content -Path $PROFILE
-}
+if($WindowsTerminalProfile.IsPresent) {
+    Assert-Administrator -FailMessage "Installing Windows Terminal profile requires administrator privilegies.";
+    Assert-WindowsTerminalInstalled;
 
-if(!$SkipWindowsTerminalProfile.IsPresent) {
     # Create symlink to Windows Terminal settings.
     $TerminalProfileSource = Join-Path $PWD "Windows Terminal/profiles.json"
     $TerminalPath = Get-WindowsStoreAppPath -App "Microsoft.WindowsTerminal_8wekyb3d8bbwe";
@@ -43,20 +54,31 @@ if(!$SkipWindowsTerminalProfile.IsPresent) {
     New-Item -Path $TerminalProfileDestination -ItemType SymbolicLink -Value $TerminalProfileSource | Out-Null;
 }
 
-if(!$SkipFont.IsPresent) {
+#################################################################
+# FONTS
+#################################################################
+
+if($Fonts.IsPresent) {
     # Install RobotoMono font.
     Write-Host "Installing RobotoMono nerd font..."
     $FontPath = Join-Path $PWD "Windows Terminal/RobotoMono.ttf";
     Install-Font -FontPath $FontPath;
 }
 
-if(!$SkipStarship.IsPresent) {
+#################################################################
+# STARSHIP
+#################################################################
+
+if($StarshipProfile.IsPresent) {
+    Assert-Administrator -FailMessage "Installing Starship profile requires administrator privilegies.";
+    Assert-StarshipInstalled;
+
     # Create symlink to Starship profile.
     $StarshipSource = Join-Path $PWD "Starship/starship.toml";
     $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
     $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
     if(!(Test-Path $StarshipConfigDirectory)) {
-        Write-Host "Creating ~/.config directory..."
+        Write-Host "Creating ~/.config directory...";
         New-Item $StarshipConfigDirectory -ItemType Directory;
     }
     if(Test-Path $StarshipConfigDestination) {

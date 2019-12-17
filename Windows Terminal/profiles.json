@@ -45,7 +45,11 @@
             "useAcrylic": true,
             "acrylicOpacity": 0.9,
             "scrollbarState": "visible",
-            "snapOnInput": true
+            "snapOnInput": true,
+            "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell.png",
+            "backgroundImageAlignment": "bottomRight",
+            "backgroundImageStretchMode": "none",
+            "backgroundImageOpacity": 0.25
         },
         {
             "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -56,7 +60,14 @@
         {
             "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
             "name": "Ubuntu",
-            "source": "Windows.Terminal.Wsl"
+            "fontFace": "RobotoMono NF",
+            "colorScheme": "Patrik",
+            "source": "Windows.Terminal.Wsl",
+            "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/ubuntu.png",
+            "backgroundImageAlignment": "bottomRight",
+            "backgroundImageStretchMode": "none",
+            "backgroundImageOpacity": 0.25,
+            "background": "#351F18"
         },
         {
             "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",

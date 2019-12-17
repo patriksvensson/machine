@@ -50,8 +50,14 @@ if($WindowsTerminalProfile.IsPresent) {
     if(Test-Path $TerminalProfileDestination) {
         Remove-Item -Path $TerminalProfileDestination;
     }
+
     Write-Host "Creating symlink to Windows terminal settings..."
     New-Item -Path $TerminalProfileDestination -ItemType SymbolicLink -Value $TerminalProfileSource | Out-Null;
+
+    # Set a user environment variable that contains the path to console images.
+    Write-Host "Setting environment 'WINDOWSTERMINAL_IMAGES' variable..."
+    $ImagesPath = Join-Path $PWD "Images";
+    [Environment]::SetEnvironmentVariable("WINDOWSTERMINAL_IMAGES", "$ImagesPath", "User")
 }
 
 #################################################################

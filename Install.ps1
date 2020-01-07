@@ -29,12 +29,12 @@ if (!(Assert-CommandExists -CommandName "Install-BoxstarterPackage")) {
     Get-Boxstarter -Force
 }
 
-# Run the boxstarter installation?
+# Run the Boxstarter installation?
 if ($Boxstarter.IsPresent -or $All.IsPresent) {
     Install-BoxstarterPackage ./Computer/Boxstarter.ps1 -DisableReboots
 }
 
-# Install terminal settings?
+# Install stuff that we can't install via Boxstarter?
 if ($Other.IsPresent -or $All.IsPresent) {
     Push-Location
     Set-location computer

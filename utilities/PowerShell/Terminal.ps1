@@ -1,4 +1,4 @@
-. (Join-Path $PWD "./Scripts/Store.ps1")
+. (Join-Path $PSScriptRoot "Store.ps1")
 
 Function Assert-WindowsTerminalInstalled() {
     if (!(Test-WindowsTerminal)) {

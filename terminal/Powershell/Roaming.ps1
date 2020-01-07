@@ -19,14 +19,14 @@ Function Add-VirtualDrive([string]$Path, [string]$Name) {
     Pop-Location
 }
 
-# Copies the current location to the clipboard.
+# Copies the current location to the clipboard
 Function Copy-CurrentLocation() {
     $Result = (Get-Location).Path | clip.exe
     Write-Host "Copied current location to clipboard."
     return $Result
 }
 
-# Creates a new directory and enters it.
+# Creates a new directory and enters it
 Function New-Directory([string]$Name) {
     $Directory = New-Item -Path $Name -ItemType Directory;
     if (Test-Path $Directory) {
@@ -34,7 +34,7 @@ Function New-Directory([string]$Name) {
     }
 }
 
-# Source location shortcuts.
+# Source location shortcuts
 Function Enter-GitHubLocation { Enter-SourceLocation -Provider "GitHub" -Path $Global:SourceLocation }
 Function Enter-AzureDevOpsLocation { Enter-SourceLocation -Provider "Azure DevOps" -Path $Global:AzureDevOpsSourceLocation }
 Function Enter-BitBucketLocation { Enter-SourceLocation -Provider "BitBucket" -Path $Global:BitBucketSourceLocation }

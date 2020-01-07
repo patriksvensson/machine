@@ -1,8 +1,8 @@
-﻿# Wrap the prompt by default.
+﻿# Wrap the prompt by default
 $Global:WrapPrompt = $true;
 $Global:WindowTitle = $null;
 
-# Load PoSh-Git.
+# Load PoSh-Git
 $Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if ($Global:PoShGitInstalled) {
     Import-Module posh-git
@@ -13,10 +13,10 @@ else {
 
 # The prompt
 Function Global:Prompt() {
-    # Store the last exit code.
+    # Store the last exit code
     $REALLASTEXITCODE = $LASTEXITCODE
 
-    # Not at top row? Check if we should insert a blank space.
+    # Not at top row? Check if we should insert a blank space
     if ($host.UI.RawUI.CursorPosition.Y -ge 1) {
         $previousY = $host.UI.RawUI.CursorPosition.Y - 1
         $rect = New-Object System.Management.Automation.Host.Rectangle(0, $previousY, $host.UI.RawUI.BufferSize.Width, $previousY)
@@ -72,7 +72,7 @@ Function Global:Prompt() {
     $PromptColor = if ($IsAdministrator) {[ConsoleColor]::Red} Else {[ConsoleColor]::Green}
     Write-Host "λ" -n -f ($PromptColor)
 
-    # Set the window title.
+    # Set the window title
     if ($null -eq $Global:WindowTitle) {
         $CurrentPath = $pwd.ProviderPath
         $CustomWindowTitle = if ($IsAdministrator) {"[Admin] " + $CurrentPath} Else {$CurrentPath}

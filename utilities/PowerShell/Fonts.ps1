@@ -55,6 +55,8 @@ Function Install-Font {
     $ShellApp = New-Object -ComObject Shell.Application
     $FontsFolder = $ShellApp.NameSpace($ShellAppFontNamespace)
     foreach ($Font in $Fonts) {
+        Write-Host $Font;
+
         Write-Verbose -Message ('Installing font: {0}' -f $Font.BaseName)
         $FontsFolder.CopyHere($Font.FullName)
     }

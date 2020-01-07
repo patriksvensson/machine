@@ -4,3 +4,17 @@ Function Assert-Administrator([string]$FailMessage) {
         Throw $FailMessage
     }
 }
+
+Function Assert-CommandExists([string]$CommandName) {
+    $Old = $ErrorActionPreference;
+    try {
+        if (Get-Command $CommandName) {
+            Return $true;
+        }
+        Return $false;
+    } catch {
+        Return $false;
+    } finally {
+        $ErrorActionPreference = $Old;
+    }
+}

@@ -1,95 +1,45 @@
+[CmdletBinding(DefaultParameterSetName='Granular')]
 Param(
-    [switch]$PowerShellProfile,
-    [switch]$Fonts,
-    [switch]$WindowsTerminalProfile,
-    [switch]$StarshipProfile,
-    [switch]$Force
+    [Parameter(ParameterSetName='All')]
+    [switch]$All,
+    [Parameter(ParameterSetName='Granular')]
+    [switch]$Boxstarter,
+    [Parameter(ParameterSetName='Granular')]
+    [switch]$Other,
+    [Parameter(ParameterSetName='Granular')]
+    [switch]$Terminal
 )
 
-. (Join-Path $PWD "./Scripts/Fonts.ps1")
-. (Join-Path $PWD "./Scripts/Starship.ps1")
-. (Join-Path $PWD "./Scripts/Store.ps1")
-. (Join-Path $PWD "./Scripts/Terminal.ps1")
-. (Join-Path $PWD "./Scripts/Utilities.ps1")
+# Load some utilities
+. (Join-Path $PSScriptRoot "./utilities/PowerShell/Utilities.ps1")
+. (Join-Path $PSScriptRoot "./utilities/PowerShell/Files.ps1")
 
-#################################################################
-# POWERSHELL
-#################################################################
+# Assert that we're running as administrators
+Assert-Administrator -FailMessage "This script must be run as administrator.";
 
-if($PowerShellProfile.IsPresent) {
-    if(!(Test-Path $PROFILE) -or $Force.IsPresent) {
-        # Update PowerShell profile
-        Write-Host "Adding PowerShell profile...";
-        $PowerShellProfileTemplatePath = Join-Path $PWD "PowerShell/Profile.template";
-        $PowerShellProfilePath = (Join-Path $PWD "PowerShell/Roaming.ps1");
-        Copy-Item -Path $PowerShellProfileTemplatePath -Destination $PROFILE;
-        # Replace placeholder values
-        (Get-Content -path $PROFILE -Raw) -Replace '<<PROFILE>>', $PowerShellProfilePath | Set-Content -Path $PROFILE
-        (Get-Content -path $PROFILE -Raw) -Replace '<<SOURCELOCATION>>', "$($Global:SourceLocation)" | Set-Content -Path $PROFILE
-        (Get-Content -path $PROFILE -Raw) -Replace '<<AZURELOCATION>>', "$($Global:AzureDevOpsSourceLocation)" | Set-Content -Path $PROFILE
-        (Get-Content -path $PROFILE -Raw) -Replace '<<BITBUCKETLOCATION>>', "$($Global:BitBucketSourceLocation)" | Set-Content -Path $PROFILE
-        (Get-Content -path $PROFILE -Raw) -Replace '<<GITLABLOCATION>>', "$($Global:GitLabSourceLocation)" | Set-Content -Path $PROFILE
-    } else {
-        Write-Host "PowerShell profile already exist.";
-        Write-Host "Use the -Force switch to overwrite.";
-    }
+# Install BoxStarter + Chocolatey if missing
+if (!(Assert-CommandExists -CommandName "Install-BoxstarterPackage")) {
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://boxstarter.org/bootstrapper.ps1')); 
+    Get-Boxstarter -Force
 }
 
-#################################################################
-# WINDOWS TERMINAL
-#################################################################
-
-if($WindowsTerminalProfile.IsPresent) {
-    Assert-Administrator -FailMessage "Installing Windows Terminal profile requires administrator privilegies.";
-    Assert-WindowsTerminalInstalled;
-
-    # Create symlink to Windows Terminal settings.
-    $TerminalProfileSource = Join-Path $PWD "Windows Terminal/profiles.json"
-    $TerminalPath = Get-WindowsStoreAppPath -App "Microsoft.WindowsTerminal_8wekyb3d8bbwe";
-    $TerminalProfileDestination = Join-Path $TerminalPath "LocalState/profiles.json";
-    if(Test-Path $TerminalProfileDestination) {
-        Remove-Item -Path $TerminalProfileDestination;
-    }
-
-    Write-Host "Creating symlink to Windows terminal settings..."
-    New-Item -Path $TerminalProfileDestination -ItemType SymbolicLink -Value $TerminalProfileSource | Out-Null;
-
-    # Set a user environment variable that contains the path to console images.
-    Write-Host "Setting environment 'WINDOWSTERMINAL_IMAGES' variable..."
-    $ImagesPath = Join-Path $PWD "Images";
-    [Environment]::SetEnvironmentVariable("WINDOWSTERMINAL_IMAGES", "$ImagesPath", "User")
+# Run the boxstarter installation?
+if ($Boxstarter.IsPresent -or $All.IsPresent) {
+    Install-BoxstarterPackage ./Computer/Boxstarter.ps1 -DisableReboots
 }
 
-#################################################################
-# FONTS
-#################################################################
-
-if($Fonts.IsPresent) {
-    # Install RobotoMono font.
-    Write-Host "Installing RobotoMono nerd font..."
-    $FontPath = Join-Path $PWD "Windows Terminal/RobotoMono.ttf";
-    Install-Font -FontPath $FontPath;
+# Install terminal settings?
+if ($Other.IsPresent -or $All.IsPresent) {
+    Push-Location
+    Set-location computer
+    Invoke-Expression "./Manual.ps1"
+    Pop-Location
 }
 
-#################################################################
-# STARSHIP
-#################################################################
-
-if($StarshipProfile.IsPresent) {
-    Assert-Administrator -FailMessage "Installing Starship profile requires administrator privilegies.";
-    Assert-StarshipInstalled;
-
-    # Create symlink to Starship profile.
-    $StarshipSource = Join-Path $PWD "Starship/starship.toml";
-    $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
-    $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
-    if(!(Test-Path $StarshipConfigDirectory)) {
-        Write-Host "Creating ~/.config directory...";
-        New-Item $StarshipConfigDirectory -ItemType Directory;
-    }
-    if(Test-Path $StarshipConfigDestination) {
-        Remove-Item -Path $StarshipConfigDestination;
-    }
-    Write-Host "Creating symlink to Starship profile..."
-    New-Item -Path $StarshipConfigDestination -ItemType SymbolicLink -Value $StarshipSource | Out-Null;
+# Install terminal settings?
+if ($Terminal.IsPresent -or $All.IsPresent) {
+    Push-Location
+    Set-location terminal
+    Invoke-Expression "./Install.ps1 -PowerShellProfile -Fonts -WindowsTerminalProfile -StarshipProfile"
+    Pop-Location
 }

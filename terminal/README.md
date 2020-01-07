@@ -12,3 +12,9 @@ To install, run the following script from an administrator PowerShell prompt:
 ```
 > .\Install.ps1 -PowerShellProfile -WindowsTerminalProfile -StarshipProfile -Fonts -Force
 ```
+
+Or, to install everything:
+
+```
+> .\Install.ps1 -All
+```

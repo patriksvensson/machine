@@ -10,6 +10,12 @@ Param(
     [switch]$Terminal
 )
 
+if (!$Terminal.IsPresent -and !$Other.IsPresent -and !$Boxstarter.IsPresent -and !$All.IsPresent)
+{
+    Get-Help .\Install.ps1
+    Exit;
+}
+
 # Load some utilities
 . (Join-Path $PSScriptRoot "./utilities/PowerShell/Utilities.ps1")
 . (Join-Path $PSScriptRoot "./utilities/PowerShell/Files.ps1")

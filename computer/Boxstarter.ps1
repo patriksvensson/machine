@@ -34,6 +34,7 @@ choco install Microsoft-Windows-Subsystem-Linux -source windowsfeatures
 # Applications
 ##########################################################################
 
+choco install slack
 choco install googlechrome
 choco install docker-for-windows
 choco install geforce-experience
@@ -43,6 +44,9 @@ choco install git
 choco install 7zip.install
 choco install nodejs
 choco install microsoft-windows-terminal
+choco install office365business
+choco install cmake
+choco install visualstudio2019professional
 
 ##########################################################################
 # VSCode extensions

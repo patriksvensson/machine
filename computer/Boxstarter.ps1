@@ -35,6 +35,7 @@ choco install Microsoft-Windows-Subsystem-Linux -source windowsfeatures
 ##########################################################################
 
 choco install slack
+choco install spotify
 choco install googlechrome
 choco install docker-for-windows
 choco install geforce-experience

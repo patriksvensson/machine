@@ -12,3 +12,7 @@ if (!(Test-Starship)) {
     Write-Host "Installing Starship..."
     & "cargo" "install" "starship";
 }
+
+# Install Hexyl
+& "cargo" "install" "hexyl"
+& "choco" "install" "ripgrep"

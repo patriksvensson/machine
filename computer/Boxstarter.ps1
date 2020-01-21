@@ -49,6 +49,8 @@ choco install office365business
 choco install cmake
 choco install visualstudio2019professional
 choco install screentogif
+choco install fd
+choco install hexyl
 
 ##########################################################################
 # VSCode extensions

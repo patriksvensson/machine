@@ -5,6 +5,15 @@
 Disable-UAC
 
 ##########################################################################
+# Create temporary directory
+##########################################################################
+
+# Workaround choco / boxstarter path too long error
+# https://github.com/chocolatey/boxstarter/issues/241
+$ChocoCachePath = "$env:USERPROFILE\AppData\Local\Temp\chocolatey"
+New-Item -Path $ChocoCachePath -ItemType Directory -Force
+
+##########################################################################
 # Windows settings
 ##########################################################################
 
@@ -24,41 +33,6 @@ powercfg /change monitor-timeout-ac 0 # Don't turn off monitor
 powercfg /change standby-timeout-ac 0 # Don't ever sleep
 
 ##########################################################################
-# Windows subsystem for Linux
-##########################################################################
-
-choco install Microsoft-Hyper-V-All -source windowsFeatures
-choco install Microsoft-Windows-Subsystem-Linux -source windowsfeatures
-
-##########################################################################
-# Applications
-##########################################################################
-
-choco install slack
-choco install spotify
-choco install googlechrome
-choco install docker-for-windows
-choco install geforce-experience
-choco install vscode
-choco install sysinternals -y
-choco install git
-choco install 7zip.install
-choco install nodejs
-choco install microsoft-windows-terminal
-choco install office365business
-choco install cmake
-choco install visualstudio2019professional
-choco install screentogif
-choco install fd
-choco install hexyl
-
-##########################################################################
-# VSCode extensions
-##########################################################################
-
-code --install-extension cake-build.cake-vscode
-
-##########################################################################
 # Uninstall bloatware
 ##########################################################################
 
@@ -67,6 +41,7 @@ Get-AppxPackage Microsoft.WindowsAlarms | Remove-AppxPackage
 Get-AppxPackage *Autodesk* | Remove-AppxPackage
 Get-AppxPackage *BubbleWitch* | Remove-AppxPackage
 Get-AppxPackage king.com.CandyCrush* | Remove-AppxPackage
+Get-AppxPackage Microsoft.MicrosoftOfficeHub | Remove-AppxPackage
 Get-AppxPackage Microsoft.WindowsMaps | Remove-AppxPackage
 Get-AppxPackage *Netflix* | Remove-AppxPackage
 Get-AppxPackage Microsoft.BingWeather | Remove-AppxPackage
@@ -77,6 +52,43 @@ Get-AppxPackage Microsoft.ZuneMusic | Remove-AppxPackage
 Get-AppxPackage Microsoft.YourPhone | Remove-AppxPackage
 Get-AppxPackage Microsoft.MSPaint | Remove-AppxPackage
 Get-AppxPackage Microsoft.MicrosoftSolitaireCollection | Remove-AppxPackage
+
+##########################################################################
+# Windows subsystem for Linux
+##########################################################################
+
+choco install --cache="$ChocoCachePath" --yes Microsoft-Hyper-V-All -source windowsFeatures
+choco install --cache="$ChocoCachePath" --yes Microsoft-Windows-Subsystem-Linux -source windowsfeatures
+
+##########################################################################
+# Applications
+##########################################################################
+
+choco upgrade --cache="$ChocoCachePath" --yes slack
+choco upgrade --cache="$ChocoCachePath" --yes spotify
+choco upgrade --cache="$ChocoCachePath" --yes microsoft-edge
+choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
+choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
+choco upgrade --cache="$ChocoCachePath" --yes vscode
+choco upgrade --cache="$ChocoCachePath" --yes sysinternals
+choco upgrade --cache="$ChocoCachePath" --yes git
+choco upgrade --cache="$ChocoCachePath" --yes 7zip.install
+choco upgrade --cache="$ChocoCachePath" --yes nodejs
+choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
+choco upgrade --cache="$ChocoCachePath" --yes office365business
+choco upgrade --cache="$ChocoCachePath" --yes cmake
+choco upgrade --cache="$ChocoCachePath" --yes screentogif
+choco upgrade --cache="$ChocoCachePath" --yes paint.net
+choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
+choco upgrade --cache="$ChocoCachePath" --yes curl
+choco upgrade --cache="$ChocoCachePath" --yes powershell-core
+choco upgrade --cache="$ChocoCachePath" --yes ripgrep
+
+##########################################################################
+# VSCode extensions
+##########################################################################
+
+code --install-extension cake-build.cake-vscode
 
 ##########################################################################
 # Privacy

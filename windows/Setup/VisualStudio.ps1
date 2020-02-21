@@ -1,4 +1,10 @@
 ##########################################################################
+# Disable UAC (temporarily)
+##########################################################################
+
+Disable-UAC
+
+##########################################################################
 # Create temporary directory
 ##########################################################################
 
@@ -19,3 +25,10 @@ choco install visualstudio2019professional `
       --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
 
 RefreshEnv
+
+##########################################################################
+# Restore Temporary Settings
+##########################################################################
+
+Enable-UAC
+Enable-MicrosoftUpdate

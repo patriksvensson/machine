@@ -9,8 +9,6 @@ Param(
     [Parameter(ParameterSetName='Granular')]
     [switch]$Apps,
     [Parameter(ParameterSetName='Granular')]
-    [switch]$Sandbox,
-    [Parameter(ParameterSetName='Granular')]
     [switch]$VisualStudio,
     [Parameter(ParameterSetName='Granular')]
     [switch]$Rust,
@@ -19,7 +17,7 @@ Param(
 )
 
 # Nothing selected? Show help screen.
-if (!$Windows.IsPresent -and !$WSL.IsPresent -and !$Apps.IsPresent -and !$Sandbox.IsPresent `
+if (!$Windows.IsPresent -and !$WSL.IsPresent -and !$Apps.IsPresent `
     -and !$VisualStudio.IsPresent -and !$Rust.IsPresent -and !$Starship.IsPresent `
     -and !$All.IsPresent)
 {
@@ -40,30 +38,26 @@ if (!(Assert-CommandExists -CommandName "Install-BoxstarterPackage")) {
 }
 
 if ($Windows.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/Windows.ps1
+    Install-BoxstarterPackage ./Setup/Windows.ps1 -DisableReboots
     RefreshEnv
 }
 if ($WSL.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/WSL.ps1
+    Install-BoxstarterPackage ./Setup/WSL.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Apps.IsPresent -or $All.IsPresent) {
     Install-BoxstarterPackage ./Setup/Apps.ps1 -DisableReboots
     RefreshEnv
 }
-if ($Sandbox.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/Sandbox.ps1
-    RefreshEnv
-}
 if ($VisualStudio.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/VisualStudio.ps1
+    Install-BoxstarterPackage ./Setup/VisualStudio.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Rust.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/Rust.ps1
+    Install-BoxstarterPackage ./Setup/Rust.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Starship.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/Starship.ps1
+    Install-BoxstarterPackage ./Setup/Starship.ps1 -DisableReboots
     RefreshEnv
 }

@@ -5,6 +5,15 @@
 Disable-UAC
 
 ##########################################################################
+# Create temporary directory
+##########################################################################
+
+# Workaround choco / boxstarter path too long error
+# https://github.com/chocolatey/boxstarter/issues/241
+$ChocoCachePath = "$env:USERPROFILE\AppData\Local\Temp\chocolatey"
+New-Item -Path $ChocoCachePath -ItemType Directory -Force
+
+##########################################################################
 # Windows settings
 ##########################################################################
 
@@ -42,6 +51,23 @@ Get-AppxPackage Microsoft.ZuneMusic | Remove-AppxPackage
 Get-AppxPackage Microsoft.YourPhone | Remove-AppxPackage
 Get-AppxPackage Microsoft.MSPaint | Remove-AppxPackage
 Get-AppxPackage Microsoft.MicrosoftSolitaireCollection | Remove-AppxPackage
+
+##########################################################################
+# Enable Windows subsystem for Linux
+##########################################################################
+
+if($env:UserName -ne "WDAGUtilityAccount") {
+    choco install --cache="$ChocoCachePath" --yes Microsoft-Hyper-V-All -source windowsFeatures
+    choco install --cache="$ChocoCachePath" --yes Microsoft-Windows-Subsystem-Linux -source windowsfeatures
+}
+
+##########################################################################
+# Install Windows Sandbox
+##########################################################################
+
+if($env:UserName -ne "WDAGUtilityAccount") {
+    Enable-WindowsOptionalFeature -FeatureName "Containers-DisposableClientVM" -All -Online
+}
 
 ##########################################################################
 # Privacy

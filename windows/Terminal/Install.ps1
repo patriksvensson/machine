@@ -96,7 +96,7 @@ if($All.IsPresent -or $StarshipProfile.IsPresent) {
     Assert-StarshipInstalled;
 
     # Create symlink to Starship profile
-    $StarshipSource = Join-Path $PWD "../shared/starship.toml";
+    $StarshipSource = Join-Path $PWD "../../shared/starship.toml";
     $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
     $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
     if(!(Test-Path $StarshipConfigDirectory)) {

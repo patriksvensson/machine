@@ -1,4 +1,4 @@
-[CmdletBinding(DefaultParameterSetName='Granular')]
+[CmdletBinding(DefaultParameterSetName='Prereqs')]
 Param(
     [Parameter(ParameterSetName='Prereqs')]
     [switch]$Prereqs,

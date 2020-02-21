@@ -5,6 +5,14 @@
 Disable-UAC
 
 ##########################################################################
+# Utility methods
+##########################################################################
+
+Function Test-Rust() {
+    return Test-Path -Path (Join-Path $env:USERPROFILE ".cargo");
+}
+
+##########################################################################
 # Create temporary directory
 ##########################################################################
 
@@ -35,13 +43,32 @@ choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
 choco upgrade --cache="$ChocoCachePath" --yes curl
 choco upgrade --cache="$ChocoCachePath" --yes powershell-core
 choco upgrade --cache="$ChocoCachePath" --yes ripgrep
+choco upgrade --cache="$ChocoCachePath" --yes starship
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
+choco upgrade --cache="$ChocoCachePath" --yes visualstudio2019professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
 
 ##########################################################################
 # Install VSCode extensions
 ##########################################################################
 
 code --install-extension cake-build.cake-vscode
+code --install-extension matklad.rust-analyzer
+code --install-extension ms-vscode.powershell
+
+##########################################################################
+# Install Rust
+##########################################################################
+
+if (!(Test-Rust)) {
+    Write-Host "Installing Rust..."
+    $Client = New-Object System.Net.WebClient;
+    $Client.DownloadFile("https://win.rustup.rs/x86_64", "$HOME/Downloads/rustup-init.exe");
+    Start-Process -FilePath "$HOME/Downloads/rustup-init.exe" -NoNewWindow -Wait -ArgumentList "-y";
+    RefreshEnv
+} else {
+    Write-Host "Updating Rust..."
+    rustup update
+}
 
 ##########################################################################
 # Restore Temporary Settings

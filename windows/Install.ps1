@@ -1,25 +1,16 @@
 [CmdletBinding(DefaultParameterSetName='Granular')]
 Param(
-    [Parameter(ParameterSetName='Everything')]
-    [switch]$All,
-    [Parameter(ParameterSetName='Granular')]
-    [switch]$Windows,
-    [Parameter(ParameterSetName='Granular')]
-    [switch]$WSL,
-    [Parameter(ParameterSetName='Granular')]
-    [switch]$Apps,
-    [Parameter(ParameterSetName='Granular')]
-    [switch]$VisualStudio,
-    [Parameter(ParameterSetName='Granular')]
-    [switch]$Rust,
-    [Parameter(ParameterSetName='Granular')]
-    [switch]$Starship
+    [Parameter(ParameterSetName='Prereqs')]
+    [switch]$Prereqs,
+    [Parameter(ParameterSetName='Software')]
+    [switch]$Ubuntu,
+    [Parameter(ParameterSetName='Software')]
+    [switch]$Apps
 )
 
 # Nothing selected? Show help screen.
-if (!$Windows.IsPresent -and !$WSL.IsPresent -and !$Apps.IsPresent `
-    -and !$VisualStudio.IsPresent -and !$Rust.IsPresent -and !$Starship.IsPresent `
-    -and !$All.IsPresent)
+if (!$Prereqs.IsPresent -and !$Ubuntu.IsPresent -and !$Apps.IsPresent `
+    -and !$VisualStudio.IsPresent -and !$Starship.IsPresent)
 {
     Get-Help .\Install.ps1
     Exit;
@@ -37,27 +28,15 @@ if (!(Assert-CommandExists -CommandName "Install-BoxstarterPackage")) {
     Get-Boxstarter -Force
 }
 
-if ($Windows.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/Windows.ps1 -DisableReboots
+if ($Prereqs.IsPresent) {
+    Install-BoxstarterPackage ./Setup/Prereqs.ps1 -DisableReboots
     RefreshEnv
 }
-if ($WSL.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/WSL.ps1 -DisableReboots
-    RefreshEnv
-}
-if ($Apps.IsPresent -or $All.IsPresent) {
+if ($Apps.IsPresent) {
     Install-BoxstarterPackage ./Setup/Apps.ps1 -DisableReboots
     RefreshEnv
 }
-if ($VisualStudio.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/VisualStudio.ps1 -DisableReboots
-    RefreshEnv
-}
-if ($Rust.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/Rust.ps1 -DisableReboots
-    RefreshEnv
-}
-if ($Starship.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Setup/Starship.ps1 -DisableReboots
+if ($Ubuntu.IsPresent) {
+    Install-BoxstarterPackage ./Setup/Ubuntu.ps1 -DisableReboots
     RefreshEnv
 }

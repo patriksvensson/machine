@@ -1,16 +1,27 @@
 [CmdletBinding(DefaultParameterSetName='Granular')]
 Param(
-    [Parameter(ParameterSetName='All')]
+    [Parameter(ParameterSetName='Everything')]
     [switch]$All,
     [Parameter(ParameterSetName='Granular')]
-    [switch]$Boxstarter,
+    [switch]$Windows,
     [Parameter(ParameterSetName='Granular')]
-    [switch]$Other,
+    [switch]$WSL,
+    [Parameter(ParameterSetName='Granular')]
+    [switch]$Apps,
+    [Parameter(ParameterSetName='Granular')]
+    [switch]$Sandbox,
+    [Parameter(ParameterSetName='Granular')]
+    [switch]$VisualStudio,
+    [Parameter(ParameterSetName='Granular')]
+    [switch]$Rust,
     [Parameter(ParameterSetName='Granular')]
     [switch]$Terminal
 )
 
-if (!$Terminal.IsPresent -and !$Other.IsPresent -and !$Boxstarter.IsPresent -and !$All.IsPresent)
+# Nothing selected? Show help screen.
+if (!$Windows.IsPresent -and !$WSL.IsPresent -and !$Apps.IsPresent -and !$Sandbox.IsPresent `
+    -and !$VisualStudio.IsPresent -and !$Rust.IsPresent -and !$Terminal.IsPresent `
+    -and !$All.IsPresent)
 {
     Get-Help .\Install.ps1
     Exit;
@@ -18,7 +29,6 @@ if (!$Terminal.IsPresent -and !$Other.IsPresent -and !$Boxstarter.IsPresent -and
 
 # Load some utilities
 . (Join-Path $PSScriptRoot "./utilities/PowerShell/Utilities.ps1")
-. (Join-Path $PSScriptRoot "./utilities/PowerShell/Files.ps1")
 
 # Assert that we're running as administrators
 Assert-Administrator -FailMessage "This script must be run as administrator.";
@@ -29,23 +39,31 @@ if (!(Assert-CommandExists -CommandName "Install-BoxstarterPackage")) {
     Get-Boxstarter -Force
 }
 
-# Run the Boxstarter installation?
-if ($Boxstarter.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/Boxstarter.ps1 -DisableReboots
+if ($Windows.IsPresent -or $All.IsPresent) {
+    Install-BoxstarterPackage ./Computer/Windows.ps1 -DisableReboots
+    RefreshEnv
 }
-
-# Install stuff that we can't install via Boxstarter?
-if ($Other.IsPresent -or $All.IsPresent) {
-    Push-Location
-    Set-location computer
-    Invoke-Expression "./Manual.ps1"
-    Pop-Location
+if ($WSL.IsPresent -or $All.IsPresent) {
+    Install-BoxstarterPackage ./Computer/WSL.ps1 -DisableReboots
+    RefreshEnv
 }
-
-# Install terminal settings?
+if ($Apps.IsPresent -or $All.IsPresent) {
+    Install-BoxstarterPackage ./Computer/Apps.ps1 -DisableReboots
+    RefreshEnv
+}
+if ($Sandbox.IsPresent -or $All.IsPresent) {
+    Install-BoxstarterPackage ./Computer/Sandbox.ps1 -DisableReboots
+    RefreshEnv
+}
+if ($VisualStudio.IsPresent -or $All.IsPresent) {
+    Install-BoxstarterPackage ./Computer/VisualStudio.ps1 -DisableReboots
+    RefreshEnv
+}
+if ($Rust.IsPresent -or $All.IsPresent) {
+    Install-BoxstarterPackage ./Computer/Rust.ps1 -DisableReboots
+    RefreshEnv
+}
 if ($Terminal.IsPresent -or $All.IsPresent) {
-    Push-Location
-    Set-location terminal
-    Invoke-Expression "./Install.ps1 -PowerShellProfile -Fonts -WindowsTerminalProfile -StarshipProfile"
-    Pop-Location
+    Install-BoxstarterPackage ./Computer/Terminal.ps1 -DisableReboots
+    RefreshEnv
 }

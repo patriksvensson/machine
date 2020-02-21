@@ -5,15 +5,6 @@
 Disable-UAC
 
 ##########################################################################
-# Create temporary directory
-##########################################################################
-
-# Workaround choco / boxstarter path too long error
-# https://github.com/chocolatey/boxstarter/issues/241
-$ChocoCachePath = "$env:USERPROFILE\AppData\Local\Temp\chocolatey"
-New-Item -Path $ChocoCachePath -ItemType Directory -Force
-
-##########################################################################
 # Windows settings
 ##########################################################################
 
@@ -21,7 +12,6 @@ Disable-BingSearch
 Disable-GameBarTips
 
 Set-ItemProperty -Path "HKLM:SYSTEM\CurrentControlSet\Control\FileSystem" -Name LongPathsEnabled -Type DWord -Value 1
-
 Set-WindowsExplorerOptions -EnableShowFileExtensions
 Set-TaskbarOptions -Size Large -Dock Bottom -Combine Full -Lock
 
@@ -52,43 +42,6 @@ Get-AppxPackage Microsoft.ZuneMusic | Remove-AppxPackage
 Get-AppxPackage Microsoft.YourPhone | Remove-AppxPackage
 Get-AppxPackage Microsoft.MSPaint | Remove-AppxPackage
 Get-AppxPackage Microsoft.MicrosoftSolitaireCollection | Remove-AppxPackage
-
-##########################################################################
-# Windows subsystem for Linux
-##########################################################################
-
-choco install --cache="$ChocoCachePath" --yes Microsoft-Hyper-V-All -source windowsFeatures
-choco install --cache="$ChocoCachePath" --yes Microsoft-Windows-Subsystem-Linux -source windowsfeatures
-
-##########################################################################
-# Applications
-##########################################################################
-
-choco upgrade --cache="$ChocoCachePath" --yes slack
-choco upgrade --cache="$ChocoCachePath" --yes spotify
-choco upgrade --cache="$ChocoCachePath" --yes microsoft-edge
-choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
-choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
-choco upgrade --cache="$ChocoCachePath" --yes vscode
-choco upgrade --cache="$ChocoCachePath" --yes sysinternals
-choco upgrade --cache="$ChocoCachePath" --yes git
-choco upgrade --cache="$ChocoCachePath" --yes 7zip.install
-choco upgrade --cache="$ChocoCachePath" --yes nodejs
-choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
-choco upgrade --cache="$ChocoCachePath" --yes office365business
-choco upgrade --cache="$ChocoCachePath" --yes cmake
-choco upgrade --cache="$ChocoCachePath" --yes screentogif
-choco upgrade --cache="$ChocoCachePath" --yes paint.net
-choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
-choco upgrade --cache="$ChocoCachePath" --yes curl
-choco upgrade --cache="$ChocoCachePath" --yes powershell-core
-choco upgrade --cache="$ChocoCachePath" --yes ripgrep
-
-##########################################################################
-# VSCode extensions
-##########################################################################
-
-code --install-extension cake-build.cake-vscode
 
 ##########################################################################
 # Privacy

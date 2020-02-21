@@ -27,7 +27,6 @@ choco upgrade --cache="$ChocoCachePath" --yes sysinternals
 choco upgrade --cache="$ChocoCachePath" --yes git
 choco upgrade --cache="$ChocoCachePath" --yes 7zip.install
 choco upgrade --cache="$ChocoCachePath" --yes nodejs
-choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
 choco upgrade --cache="$ChocoCachePath" --yes office365business
 choco upgrade --cache="$ChocoCachePath" --yes cmake
 choco upgrade --cache="$ChocoCachePath" --yes screentogif

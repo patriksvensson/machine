@@ -28,7 +28,7 @@ if (!$Windows.IsPresent -and !$WSL.IsPresent -and !$Apps.IsPresent -and !$Sandbo
 }
 
 # Load some utilities
-. (Join-Path $PSScriptRoot "./utilities/PowerShell/Utilities.ps1")
+. (Join-Path $PSScriptRoot "./Utilities/Utilities.ps1")
 
 # Assert that we're running as administrators
 Assert-Administrator -FailMessage "This script must be run as administrator.";
@@ -40,30 +40,36 @@ if (!(Assert-CommandExists -CommandName "Install-BoxstarterPackage")) {
 }
 
 if ($Windows.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/Windows.ps1 -DisableReboots
+    Install-BoxstarterPackage ./Setup/Windows.ps1 -DisableReboots
     RefreshEnv
 }
 if ($WSL.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/WSL.ps1 -DisableReboots
+    Install-BoxstarterPackage ./Setup/WSL.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Apps.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/Apps.ps1 -DisableReboots
+    Install-BoxstarterPackage ./Setup/Apps.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Sandbox.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/Sandbox.ps1 -DisableReboots
+    Install-BoxstarterPackage ./Setup/Sandbox.ps1 -DisableReboots
     RefreshEnv
 }
 if ($VisualStudio.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/VisualStudio.ps1 -DisableReboots
+    Install-BoxstarterPackage ./Setup/VisualStudio.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Rust.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/Rust.ps1 -DisableReboots
+    Install-BoxstarterPackage ./Setup/Rust.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Terminal.IsPresent -or $All.IsPresent) {
-    Install-BoxstarterPackage ./Computer/Terminal.ps1 -DisableReboots
+    Install-BoxstarterPackage ./Setup/Terminal.ps1 -DisableReboots
     RefreshEnv
+
+    # Install Powershell profile
+    Push-Location
+    Set-location terminal
+    Invoke-Expression "./Install.ps1 -PowerShellProfile -Fonts -WindowsTerminalProfile -StarshipProfile"
+    Pop-Location
 }

@@ -11,6 +11,22 @@ Function Test-Starship() {
 }
 
 ##########################################################################
+# Create temporary directory
+##########################################################################
+
+# Workaround choco / boxstarter path too long error
+# https://github.com/chocolatey/boxstarter/issues/241
+$ChocoCachePath = "$env:USERPROFILE\AppData\Local\Temp\chocolatey"
+New-Item -Path $ChocoCachePath -ItemType Directory -Force
+
+##########################################################################
+# Install Windows terminal
+##########################################################################
+
+choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
+RefreshEnv
+
+##########################################################################
 # Install Starship
 ##########################################################################
 

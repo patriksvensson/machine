@@ -13,19 +13,20 @@ truncate_to_repo = true
 style = "bold blue"
 
 [dotnet]
-symbol = " "
+symbol = "[.NET] "
 style = "dimmed blue"
 heuristic = true
   
 [rust]
+symbol = "[Rust] "
 style = "dimmed red"
 
 [nodejs]
-symbol = " "
+symbol = "[NodeJS] "
 style = "dimmed green"
 
 [java]
-symbol = " "
+symbol = "[Java] "
 style = "dimmed purple"
 
 [git_branch]
@@ -52,7 +53,7 @@ untracked = "  "
 
 [package]
 disabled = false
-symbol = " "
+symbol = ""
 style = "bold white"
 
 [time]

@@ -14,11 +14,19 @@ Param(
     [switch]$Force
 )
 
-. (Join-Path $PSScriptRoot "../utilities/PowerShell/Fonts.ps1")
-. (Join-Path $PSScriptRoot "../utilities/PowerShell/Starship.ps1")
-. (Join-Path $PSScriptRoot "../utilities/PowerShell/Store.ps1")
-. (Join-Path $PSScriptRoot "../utilities/PowerShell/Terminal.ps1")
-. (Join-Path $PSScriptRoot "../utilities/PowerShell/Utilities.ps1")
+. (Join-Path $PSScriptRoot "../Utilities/Fonts.ps1")
+. (Join-Path $PSScriptRoot "../Utilities/Starship.ps1")
+. (Join-Path $PSScriptRoot "../Utilities/Store.ps1")
+. (Join-Path $PSScriptRoot "../Utilities/Terminal.ps1")
+. (Join-Path $PSScriptRoot "../Utilities/Utilities.ps1")
+
+# Nothing selected? Show help screen.
+if (!$PowerShellProfile.IsPresent -and !$Fonts.IsPresent -and !$WindowsTerminalProfile.IsPresent `
+    -and !$StarshipProfile.IsPresent -and !$All.IsPresent)
+{
+    Get-Help .\Install.ps1
+    Exit;
+}
 
 #################################################################
 # POWERSHELL
@@ -88,7 +96,7 @@ if($All.IsPresent -or $StarshipProfile.IsPresent) {
     Assert-StarshipInstalled;
 
     # Create symlink to Starship profile
-    $StarshipSource = Join-Path $PWD "Starship/starship.toml";
+    $StarshipSource = Join-Path $PWD "../shared/starship.toml";
     $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
     $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
     if(!(Test-Path $StarshipConfigDirectory)) {

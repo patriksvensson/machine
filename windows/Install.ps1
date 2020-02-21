@@ -66,10 +66,4 @@ if ($Rust.IsPresent -or $All.IsPresent) {
 if ($Terminal.IsPresent -or $All.IsPresent) {
     Install-BoxstarterPackage ./Setup/Terminal.ps1 -DisableReboots
     RefreshEnv
-
-    # Install Powershell profile
-    Push-Location
-    Set-location terminal
-    Invoke-Expression "./Install.ps1 -PowerShellProfile -Fonts -WindowsTerminalProfile -StarshipProfile"
-    Pop-Location
 }

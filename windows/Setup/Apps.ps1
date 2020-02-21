@@ -35,6 +35,7 @@ choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
 choco upgrade --cache="$ChocoCachePath" --yes curl
 choco upgrade --cache="$ChocoCachePath" --yes powershell-core
 choco upgrade --cache="$ChocoCachePath" --yes ripgrep
+choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
 
 ##########################################################################
 # Install VSCode extensions

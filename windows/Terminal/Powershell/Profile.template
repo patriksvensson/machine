@@ -9,6 +9,18 @@ $Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
 Enter-GitHubLocation
 Clear-Host
 
+# Load Starship
+$Global:PoshGitInstalled = (Get-Module -ListAvailable -Name posh-git)
+if ($Global:PoshGitInstalled) {
+    Write-Host "Initializing posh-git... " -NoNewline
+    Import-Module posh-git
+    Write-Host "Done!" -ForegroundColor Green
+}
+else {
+    Write-Host "PoSh-Git has not been installed." -ForegroundColor Red
+}
+
+# Initialize Starship
 $StarshipVersion = starship --version;
 if ($null -ne $StarshipVersion -and $StarshipVersion -ne "") {
     Write-Host "Initializing Starship... " -NoNewline

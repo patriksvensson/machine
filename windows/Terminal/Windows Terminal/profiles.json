@@ -31,6 +31,90 @@
                 "keys": [
                     "ctrl+v"
                 ]
+            },
+            {
+                "command": "splitHorizontal",
+                "keys": [
+                    "ctrl+shift+-"
+                ]
+            },
+            {
+                "command": "splitVertical",
+                "keys": [
+                    "ctrl+shift+<"
+                ]
+            },
+            {
+                "command": {
+                    "action": "moveFocus",
+                    "direction": "down"
+                },
+                "keys": [
+                    "ctrl+down"
+                ]
+            },
+            {
+                "command": {
+                    "action": "moveFocus",
+                    "direction": "left"
+                },
+                "keys": [
+                    "ctrl+left"
+                ]
+            },
+            {
+                "command": {
+                    "action": "moveFocus",
+                    "direction": "right"
+                },
+                "keys": [
+                    "ctrl+right"
+                ]
+            },
+            {
+                "command": {
+                    "action": "moveFocus",
+                    "direction": "up"
+                },
+                "keys": [
+                    "ctrl+up"
+                ]
+            },
+            {
+                "command": {
+                    "action": "resizePane",
+                    "direction": "down"
+                },
+                "keys": [
+                    "ctrl+shift+down"
+                ]
+            },
+            {
+                "command": {
+                    "action": "resizePane",
+                    "direction": "left"
+                },
+                "keys": [
+                    "ctrl+shift+left"
+                ]
+            },
+            {
+                "command": {
+                    "action": "resizePane",
+                    "direction": "right"
+                },
+                "keys": [
+                    "ctrl+shift+right"
+                ]
+            },
+            {
+                "command": {
+                    "action": "resizePane",
+                    "direction": "up"
+                },
+                "keys": [
+                    "ctrl+shift+up"
+                ]
             }
         ]
     },

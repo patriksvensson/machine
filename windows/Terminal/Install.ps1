@@ -60,7 +60,7 @@ if($All.IsPresent -or $WindowsTerminalProfile.IsPresent) {
     Assert-WindowsTerminalInstalled;
 
     # Create symlink to Windows Terminal settings
-    $TerminalProfileSource = Join-Path $PWD "Windows Terminal/profiles.json"
+    $TerminalProfileSource = Join-Path $PWD "../../config/profiles.json"
     $TerminalPath = Get-WindowsStoreAppPath -App "Microsoft.WindowsTerminal_8wekyb3d8bbwe";
     $TerminalProfileDestination = Join-Path $TerminalPath "LocalState/profiles.json";
     if(Test-Path $TerminalProfileDestination) {
@@ -83,7 +83,7 @@ if($All.IsPresent -or $WindowsTerminalProfile.IsPresent) {
 if($All.IsPresent -or $Fonts.IsPresent) {
     # Install RobotoMono font
     Write-Host "Installing RobotoMono nerd font..."
-    $FontPath = Join-Path $PWD "Windows Terminal/RobotoMono.ttf";
+    $FontPath = Join-Path $PWD "Fonts/RobotoMono.ttf";
     Install-Font -FontPath $FontPath;
 }
 
@@ -96,7 +96,7 @@ if($All.IsPresent -or $StarshipProfile.IsPresent) {
     Assert-StarshipInstalled;
 
     # Create symlink to Starship profile
-    $StarshipSource = Join-Path $PWD "../../shared/starship.toml";
+    $StarshipSource = Join-Path $PWD "../../config/starship.toml";
     $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
     $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
     if(!(Test-Path $StarshipConfigDirectory)) {

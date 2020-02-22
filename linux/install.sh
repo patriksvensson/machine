@@ -40,7 +40,7 @@ if [ -f "$HOME/.alacritty.yml" ]; then
 fi
 if [ ! -L "$HOME/.alacritty.yml" ]; then
     echo "Creating symbolic link to alacritty configuration..."
-    ln -s "$PWD/../shared/alacritty.yml" ~/.alacritty.yml
+    ln -s "$PWD/../config/alacritty.yml" ~/.alacritty.yml
 fi
 
 ########################################################
@@ -56,7 +56,7 @@ if [ -f "$HOME/.config/starship.toml" ]; then
 fi
 if [ ! -L "$HOME/.config/starship.toml" ]; then
     echo "Creating symbolic link to Starship configuration..."
-    ln -s "$PWD/../shared/starship.toml" ~/.config/starship.toml
+    ln -s "$PWD/../config/starship.toml" ~/.config/starship.toml
 fi
 
 ########################################################
@@ -72,7 +72,7 @@ if [ -f "$HOME/.tmux.conf" ]; then
 fi
 if [ ! -L "$HOME/.tmux.conf" ]; then
     echo "Creating symbolic link to tmux configuration..."
-    ln -s "$PWD/../shared/tmux.conf" ~/.tmux.conf
+    ln -s "$PWD/../config/tmux.conf" ~/.tmux.conf
 fi
 
 ########################################################

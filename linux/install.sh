@@ -4,17 +4,32 @@
 # INSTALLATION
 ########################################################
 
+# Running under Ubuntu?
+if [ -f /etc/lsb-release ]; then
+    if ! dpkg -s 'build-essential' >/dev/null 2>&1; then
+        sudo apt-get install 'build-essential' -y
+    fi
+fi
+
 # Is Rust installed?
 if [ ! -x "$HOME/.cargo/bin/cargo" ]; then
     echo "Installing Rust..."
     curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y
-    PATH="$HOME/.cargo/bin:$PATH"
+    if [ $? -ne 0 ]; then
+        echo -e "\n\e[31mAn error occured while installing Rust.\e[0m"
+        exit -1;
+    fi
+    export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 # Is Starship installed?
 if [ ! -x "$HOME/.cargo/bin/starship" ]; then
     echo "Installing Starship..."
     cargo install starship
+    if [ $? -ne 0 ]; then 
+        echo -e "\n\e[31mAn error occured while installing Starship.\e[0m"
+        exit -1;
+    fi
 fi
 
 # Is tmux installed?

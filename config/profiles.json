@@ -21,6 +21,12 @@
                 ]
             },
             {
+                "command": "closePane",
+                "keys": [
+                    "ctrl+shift+d"
+                ]
+            },
+            {
                 "command": "copy",
                 "keys": [
                     "ctrl+c"

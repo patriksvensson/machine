@@ -128,7 +128,7 @@
         {
             "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
             "name": "Windows PowerShell",
-            "background": "#1E2E42",
+            "background": "#222632",
             "colorScheme": "Tomorrow Night",
             "commandline": "powershell.exe",
             "fontFace": "CaskaydiaCove Nerd Font Mono",
@@ -167,12 +167,11 @@
         },
         {
             "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-            "hidden": false,
+            "hidden": true,
             "name": "PowerShell Core",
             "source": "Windows.Terminal.PowershellCore",
             "fontFace": "CaskaydiaCove Nerd Font Mono",
             "colorScheme": "Tomorrow Night",
-            "background": "#222632",
             "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell_core.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageStretchMode": "none",

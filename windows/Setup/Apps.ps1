@@ -36,6 +36,7 @@ choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
 choco upgrade --cache="$ChocoCachePath" --yes vscode
 choco upgrade --cache="$ChocoCachePath" --yes sysinternals
 choco upgrade --cache="$ChocoCachePath" --yes git
+choco upgrade --cache="$ChocoCachePath" --yes ghostscript.app
 choco upgrade --cache="$ChocoCachePath" --yes 7zip.install
 choco upgrade --cache="$ChocoCachePath" --yes nodejs
 choco upgrade --cache="$ChocoCachePath" --yes office365business

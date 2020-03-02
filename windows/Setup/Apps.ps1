@@ -57,6 +57,7 @@ choco upgrade --cache="$ChocoCachePath" --yes visualstudio2019professional --pac
 code --install-extension cake-build.cake-vscode
 code --install-extension matklad.rust-analyzer
 code --install-extension ms-vscode.powershell
+code --install-extension bungcip.better-toml
 
 code --install-extension jolaleye.horizon-theme-vscode
 code --install-extension vscode-icons-team.vscode-icons

@@ -31,6 +31,7 @@ choco upgrade --cache="$ChocoCachePath" --yes origin
 choco upgrade --cache="$ChocoCachePath" --yes discord
 choco upgrade --cache="$ChocoCachePath" --yes slack
 choco upgrade --cache="$ChocoCachePath" --yes spotify
+choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-edge
 choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
 choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
@@ -60,6 +61,7 @@ code --install-extension cake-build.cake-vscode
 code --install-extension matklad.rust-analyzer
 code --install-extension ms-vscode.powershell
 code --install-extension bungcip.better-toml
+code --install-extension ms-azuretools.vscode-docker
 
 code --install-extension jolaleye.horizon-theme-vscode
 code --install-extension vscode-icons-team.vscode-icons

@@ -1,0 +1,274 @@
+{
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+  "alwaysShowTabs": true,
+  "requestedTheme": "dark",
+  "showTabsInTitlebar": true,
+  "initialCols": 120,
+  "initialRows": 40,
+  "keybindings": [
+    {
+      "command": "newTab",
+      "keys": [
+        "ctrl+t"
+      ]
+    },
+    {
+      "command": "closeTab",
+      "keys": [
+        "ctrl+w"
+      ]
+    },
+    {
+      "command": "closePane",
+      "keys": [
+        "ctrl+shift+d"
+      ]
+    },
+    {
+      "command": "copy",
+      "keys": [
+        "ctrl+c"
+      ]
+    },
+    {
+      "command": "paste",
+      "keys": [
+        "ctrl+v"
+      ]
+    },
+    {
+      "command": {
+        "action": "splitPane",
+        "split": "horizontal"
+      },
+      "keys": "ctrl+shift+-" 
+    },
+    {
+      "command": {
+        "action": "splitPane",
+        "split": "vertical"
+      },
+      "keys": "ctrl+shift+<" 
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "down"
+      },
+      "keys": [
+        "ctrl+down"
+      ]
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "left"
+      },
+      "keys": [
+        "ctrl+left"
+      ]
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "right"
+      },
+      "keys": [
+        "ctrl+right"
+      ]
+    },
+    {
+      "command": {
+        "action": "moveFocus",
+        "direction": "up"
+      },
+      "keys": [
+        "ctrl+up"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "down"
+      },
+      "keys": [
+        "ctrl+shift+down"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "left"
+      },
+      "keys": [
+        "ctrl+shift+left"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "right"
+      },
+      "keys": [
+        "ctrl+shift+right"
+      ]
+    },
+    {
+      "command": {
+        "action": "resizePane",
+        "direction": "up"
+      },
+      "keys": [
+        "ctrl+shift+up"
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+      "name": "Windows PowerShell",
+      "background": "#222632",
+      "colorScheme": "Tomorrow Night",
+      "commandline": "powershell.exe",
+      "fontFace": "CaskaydiaCove Nerd Font Mono",
+      "fontSize": 12,
+      "useAcrylic": true,
+      "acrylicOpacity": 0.9,
+      "scrollbarState": "visible",
+      "snapOnInput": true,
+      "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell.png",
+      "backgroundImageAlignment": "bottomRight",
+      "backgroundImageStretchMode": "none",
+      "backgroundImageOpacity": 0.25
+    },
+    {
+      "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+      "hidden": true,
+      "name": "cmd",
+      "commandline": "cmd.exe"
+    },
+    {
+      "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+      "name": "Ubuntu",
+      "fontFace": "CaskaydiaCove Nerd Font Mono",
+      "colorScheme": "Tomorrow Night",
+      "source": "Windows.Terminal.Wsl",
+      "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/ubuntu.png",
+      "backgroundImageAlignment": "bottomRight",
+      "backgroundImageStretchMode": "none",
+      "backgroundImageOpacity": 0.25
+    },
+    {
+      "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+      "hidden": true,
+      "name": "Azure Cloud Shell",
+      "source": "Windows.Terminal.Azure"
+    },
+    {
+      "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+      "hidden": true,
+      "name": "PowerShell Core",
+      "source": "Windows.Terminal.PowershellCore",
+      "fontFace": "CaskaydiaCove Nerd Font Mono",
+      "colorScheme": "Tomorrow Night",
+      "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell_core.png",
+      "backgroundImageAlignment": "bottomRight",
+      "backgroundImageStretchMode": "none",
+      "backgroundImageOpacity": 0.25
+    },
+    {
+      "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
+      "hidden": false,
+      "name": "Ubuntu-18.04",
+      "fontFace": "CaskaydiaCove Nerd Font Mono",
+      "colorScheme": "Tomorrow Night",
+      "source": "Windows.Terminal.Wsl",
+      "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/ubuntu.png",
+      "backgroundImageAlignment": "bottomRight",
+      "backgroundImageStretchMode": "none",
+      "backgroundImageOpacity": 0.25
+    },
+    {
+      "hidden": false,
+      "name": "Raspberry Pi",
+      "commandline": "ssh pi@192.168.1.185",
+      "fontFace": "CaskaydiaCove Nerd Font Mono",
+      "colorScheme": "Tomorrow Night",
+      "icon": "%WINDOWSTERMINAL_ICONS%/rpi.png",
+      "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/rpi.png",
+      "backgroundImageAlignment": "bottomRight",
+      "backgroundImageStretchMode": "none",
+      "backgroundImageOpacity": 0.25
+    }
+  ],
+  "schemes": [
+    {
+      "name": "Default",
+      "background": "#222632",
+      "black": "#0C0C0C",
+      "blue": "#4C98C8",
+      "foreground": "#cccccc",
+      "green": "#9ab35c",
+      "red": "#E67179",
+      "white": "#CCCCCC",
+      "yellow": "#d3b026",
+      "cyan": "#6ec9c9",
+      "purple": "#6e3d6e",
+      "brightBlack": "#777777",
+      "brightBlue": "#62c3ff",
+      "brightCyan": "#5fdfdf",
+      "brightGreen": "#B9D770",
+      "brightPurple": "#854a85",
+      "brightRed": "#ff8088",
+      "brightWhite": "#eeeeee",
+      "brightYellow": "#cab976",
+      "selectionBackground": "#CCCCCC"
+    },
+    {
+      "name": "Ubuntu",
+      "background": "#351F18",
+      "black": "#0C0C0C",
+      "blue": "#4C98C8",
+      "foreground": "#cccccc",
+      "green": "#9ab35c",
+      "red": "#E67179",
+      "white": "#CCCCCC",
+      "yellow": "#d3b026",
+      "cyan": "#6ec9c9",
+      "purple": "#6e3d6e",
+      "brightBlack": "#777777",
+      "brightBlue": "#62c3ff",
+      "brightCyan": "#5fdfdf",
+      "brightGreen": "#B9D770",
+      "brightPurple": "#854a85",
+      "brightRed": "#ff8088",
+      "brightWhite": "#eeeeee",
+      "brightYellow": "#cab976",
+      "selectionBackground": "#CCCCCC"
+    },
+    {
+      // Base 16 Tomorrow Night 256 Color Configuration - Windows Terminal
+      // Colors made by Chris Kempson (http://chriskempson.com)
+      "name": "Tomorrow Night",
+      "background": "#2d2d2d",
+      "foreground": "#cccccc",
+      "black": "#2d2d2d",
+      "red": "#f2777a",
+      "green": "#99cc99",
+      "yellow": "#ffcc66",
+      "blue": "#6699cc",
+      "purple": "#cc99cc",
+      "cyan": "#66cccc",
+      "white": "#cccccc",
+      "brightBlack": "#999999",
+      "brightRed": "#f2777a",
+      "brightGreen": "#99cc99",
+      "brightYellow": "#ffcc66",
+      "brightBlue": "#6699cc",
+      "brightPurple": "#cc99cc",
+      "brightCyan": "#66cccc",
+      "brightWhite": "#ffffff"
+    }
+  ]
+}

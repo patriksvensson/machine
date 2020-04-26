@@ -19,6 +19,12 @@ Function Add-VirtualDrive([string]$Path, [string]$Name) {
     Pop-Location
 }
 
+Function Clear-Docker() {
+    & docker ps -a -q | ForEach-Object { docker rm $_ }
+    & docker images -q | ForEach-Object { docker rmi $_ }
+    & docker system prune --all --force
+}
+
 # Copies the current location to the clipboard
 Function Copy-CurrentLocation() {
     $Result = (Get-Location).Path | clip.exe

@@ -10,7 +10,6 @@ Param(
     [switch]$WindowsTerminalProfile,
     [Parameter(ParameterSetName='Granular')]
     [switch]$StarshipProfile,
-    [Parameter(ParameterSetName='Granular')]
     [switch]$Force
 )
 

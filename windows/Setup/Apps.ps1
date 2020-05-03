@@ -53,6 +53,7 @@ choco upgrade --cache="$ChocoCachePath" --yes starship
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
 choco upgrade --cache="$ChocoCachePath" --yes visualstudio2019professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
 choco upgrade --cache="$ChocoCachePath" --yes dotpeek --pre 
+choco upgrade --cache="$ChocoCachePath" --yes winsnap
 
 ##########################################################################
 # Install VSCode extensions

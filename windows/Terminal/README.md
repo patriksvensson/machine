@@ -1,4 +1,6 @@
-# Patrik's shell stuff
+# Terminal stuff
+
+Don't run this before cloning the machine repository properly.
 
 ## Prerequisites
 

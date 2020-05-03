@@ -64,6 +64,7 @@ code --install-extension ms-vscode.powershell
 code --install-extension bungcip.better-toml
 code --install-extension ms-azuretools.vscode-docker
 code --install-extension octref.vetur
+code --install-extension ms-vscode-remote.remote-wsl
 
 code --install-extension jolaleye.horizon-theme-vscode
 code --install-extension vscode-icons-team.vscode-icons

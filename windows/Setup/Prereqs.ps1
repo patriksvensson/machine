@@ -57,7 +57,7 @@ Get-AppxPackage Microsoft.3DBuilder | Remove-AppxPackage
 Get-AppxPackage Microsoft.WindowsAlarms | Remove-AppxPackage
 Get-AppxPackage *Autodesk* | Remove-AppxPackage
 Get-AppxPackage *BubbleWitch* | Remove-AppxPackage
-Get-AppxPackage king.com.CandyCrush* | Remove-AppxPackage
+Get-AppxPackage *CandyCrush* | Remove-AppxPackage
 Get-AppxPackage Microsoft.MicrosoftOfficeHub | Remove-AppxPackage
 Get-AppxPackage Microsoft.WindowsMaps | Remove-AppxPackage
 Get-AppxPackage *Netflix* | Remove-AppxPackage

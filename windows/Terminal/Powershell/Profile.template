@@ -17,7 +17,7 @@ if ($Global:PoshGitInstalled) {
     Write-Host "Done!" -ForegroundColor Green
 }
 else {
-    Write-Host "PoSh-Git has not been installed." -ForegroundColor Red
+    Write-Host "The posh-git module has not been installed." -ForegroundColor Red
 }
 
 # Initialize Starship

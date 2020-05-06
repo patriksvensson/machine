@@ -5,6 +5,16 @@
 Disable-UAC
 
 ##########################################################################
+# Utility stuff
+##########################################################################
+
+$Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture;
+$IsArm = $false;
+if($Architecture.StartsWith("ARM")) {
+    $IsArm = $true;
+}
+
+##########################################################################
 # Create temporary directory
 ##########################################################################
 
@@ -18,17 +28,22 @@ New-Item -Path $ChocoCachePath -ItemType Directory -Force
 ##########################################################################
 
 if($env:UserName -ne "WDAGUtilityAccount") { # Can't install this on Sandbox
-    choco install --cache="$ChocoCachePath" --yes Microsoft-Hyper-V-All -source windowsFeatures
     choco install --cache="$ChocoCachePath" --yes Microsoft-Windows-Subsystem-Linux -source windowsfeatures
     choco install --cache="$ChocoCachePath" --yes VirtualMachinePlatform -source windowsfeatures
+
+    if(!$IsArm) {
+        choco install --cache="$ChocoCachePath" --yes Microsoft-Hyper-V-All -source windowsFeatures
+    }
 }
 
 ##########################################################################
 # Install Windows Sandbox
 ##########################################################################
 
-if($env:UserName -ne "WDAGUtilityAccount") { # Can't install this on Sandbox
-    Enable-WindowsOptionalFeature -FeatureName "Containers-DisposableClientVM" -All -Online
+if(!$IsArm) { # Can't install Windows Sandbox on ARM devices
+    if($env:UserName -ne "WDAGUtilityAccount") { # Can't install this on Sandbox
+        Enable-WindowsOptionalFeature -FeatureName "Containers-DisposableClientVM" -All -Online
+    }
 }
 
 ##########################################################################

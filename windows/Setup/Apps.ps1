@@ -5,11 +5,20 @@
 Disable-UAC
 
 ##########################################################################
-# Utility methods
+# Utility stuff
 ##########################################################################
 
 Function Test-Rust() {
     return Test-Path -Path (Join-Path $env:USERPROFILE ".cargo");
+}
+
+$Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture;
+$IsArm = $false;
+if($Architecture.StartsWith("ARM")) {
+    Write-Host "##########################################################################"
+    Write-Host "# RUNNING ON ARM COMPUTER"
+    Write-Host "##########################################################################"
+    $IsArm = $true;
 }
 
 ##########################################################################
@@ -25,35 +34,39 @@ New-Item -Path $ChocoCachePath -ItemType Directory -Force
 # Install applications
 ##########################################################################
 
-choco upgrade --cache="$ChocoCachePath" --yes steam
-choco upgrade --cache="$ChocoCachePath" --yes uplay
-choco upgrade --cache="$ChocoCachePath" --yes origin
 choco upgrade --cache="$ChocoCachePath" --yes discord
 choco upgrade --cache="$ChocoCachePath" --yes slack
 choco upgrade --cache="$ChocoCachePath" --yes spotify
-choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-edge
-choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
-choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
 choco upgrade --cache="$ChocoCachePath" --yes vscode
-choco upgrade --cache="$ChocoCachePath" --yes sysinternals
 choco upgrade --cache="$ChocoCachePath" --yes git
 choco upgrade --cache="$ChocoCachePath" --yes ghostscript.app
 choco upgrade --cache="$ChocoCachePath" --yes 7zip.install
-choco upgrade --cache="$ChocoCachePath" --yes nodejs
 choco upgrade --cache="$ChocoCachePath" --yes office365business
-choco upgrade --cache="$ChocoCachePath" --yes cmake
 choco upgrade --cache="$ChocoCachePath" --yes screentogif
 choco upgrade --cache="$ChocoCachePath" --yes paint.net
 choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
-choco upgrade --cache="$ChocoCachePath" --yes curl
 choco upgrade --cache="$ChocoCachePath" --yes powershell-core
 choco upgrade --cache="$ChocoCachePath" --yes ripgrep
 choco upgrade --cache="$ChocoCachePath" --yes starship
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
-choco upgrade --cache="$ChocoCachePath" --yes visualstudio2019professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
-choco upgrade --cache="$ChocoCachePath" --yes dotpeek --pre 
 choco upgrade --cache="$ChocoCachePath" --yes winsnap
+
+if(!$IsArm) {
+    # x86/x64 only
+    choco upgrade --cache="$ChocoCachePath" --yes steam
+    choco upgrade --cache="$ChocoCachePath" --yes uplay
+    choco upgrade --cache="$ChocoCachePath" --yes origin
+    choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
+    choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
+    choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
+    choco upgrade --cache="$ChocoCachePath" --yes sysinternals
+    choco upgrade --cache="$ChocoCachePath" --yes nodejs
+    choco upgrade --cache="$ChocoCachePath" --yes cmake
+    choco upgrade --cache="$ChocoCachePath" --yes curl
+    choco upgrade --cache="$ChocoCachePath" --yes visualstudio2019professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
+    choco upgrade --cache="$ChocoCachePath" --yes dotpeek --pre 
+}
 
 ##########################################################################
 # Install VSCode extensions
@@ -66,7 +79,6 @@ code --install-extension bungcip.better-toml
 code --install-extension ms-azuretools.vscode-docker
 code --install-extension octref.vetur
 code --install-extension ms-vscode-remote.remote-wsl
-
 code --install-extension jolaleye.horizon-theme-vscode
 code --install-extension vscode-icons-team.vscode-icons
 
@@ -74,15 +86,17 @@ code --install-extension vscode-icons-team.vscode-icons
 # Install Rust
 ##########################################################################
 
-if (!(Test-Rust)) {
-    Write-Host "Installing Rust..."
-    $Client = New-Object System.Net.WebClient;
-    $Client.DownloadFile("https://win.rustup.rs/x86_64", "$HOME/Downloads/rustup-init.exe");
-    Start-Process -FilePath "$HOME/Downloads/rustup-init.exe" -NoNewWindow -Wait -ArgumentList "-y";
-    RefreshEnv
-} else {
-    Write-Host "Updating Rust..."
-    rustup update
+if($IsArm) {
+    if (!(Test-Rust)) {
+        Write-Host "Installing Rust..."
+        $Client = New-Object System.Net.WebClient;
+        $Client.DownloadFile("https://win.rustup.rs/x86_64", "$HOME/Downloads/rustup-init.exe");
+        Start-Process -FilePath "$HOME/Downloads/rustup-init.exe" -NoNewWindow -Wait -ArgumentList "-y";
+        RefreshEnv
+    } else {
+        Write-Host "Updating Rust..."
+        rustup update
+    }
 }
 
 ##########################################################################

@@ -6,8 +6,6 @@ $Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
 # Load the profile
 . "<<PROFILE>>"
 
-$IsArm = Test-Arm;
-
 Enter-GitHubLocation
 Clear-Host
 
@@ -22,7 +20,7 @@ else {
     Write-Host "The posh-git module has not been installed." -ForegroundColor Red
 }
 
-if($IsArm) {
+if(Test-Arm -or $null -ne $env:PREFER_OLD_PROMPT) {
     . "<<PROMPT>>"
 } else {
     # Initialize Starship

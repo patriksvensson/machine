@@ -86,7 +86,7 @@ code --install-extension vscode-icons-team.vscode-icons
 # Install Rust
 ##########################################################################
 
-if($IsArm) {
+if(!$IsArm) {
     if (!(Test-Rust)) {
         Write-Host "Installing Rust..."
         $Client = New-Object System.Net.WebClient;

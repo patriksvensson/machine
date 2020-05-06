@@ -1,9 +1,16 @@
-Function Find-Files([string]$Pattern)
-{
-    if($null -ne $Pattern -and $Pattern -ne "") {
+Function Find-Files([string]$Pattern) {
+    if ($null -ne $Pattern -and $Pattern -ne "") {
         Get-Childitem -Include $Pattern -File -Recurse -ErrorAction SilentlyContinue `
-            | ForEach-Object { Resolve-Path -Relative $_ | Write-Host }
+        | ForEach-Object { Resolve-Path -Relative $_ | Write-Host }
     }
+}
+
+Function Test-Arm() {
+    $Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture;
+    if ($Architecture.StartsWith("ARM")) {
+        return $true;
+    }
+    return $false;
 }
 
 Function Set-As([Parameter(Mandatory = $true)][string]$Name) {
@@ -45,7 +52,7 @@ Function Enter-GitHubLocation { Enter-SourceLocation -Provider "GitHub" -Path $G
 Function Enter-AzureDevOpsLocation { Enter-SourceLocation -Provider "Azure DevOps" -Path $Global:AzureDevOpsSourceLocation }
 Function Enter-BitBucketLocation { Enter-SourceLocation -Provider "BitBucket" -Path $Global:BitBucketSourceLocation }
 Function Enter-GitLabLocation { Enter-SourceLocation -Provider "GitLab" -Path $Global:GitLabSourceLocation }
-Function Enter-SourceLocation([string]$Provider,[string]$Path) {
+Function Enter-SourceLocation([string]$Provider, [string]$Path) {
     if ([string]::IsNullOrWhiteSpace($Path)) {
         Write-Host "The source location for $Provider have not been set."
         return
@@ -59,8 +66,7 @@ Function Set-WindowTitle([string]$Title) {
 }
 
 # For fun
-Function Get-DadJoke 
-{
+Function Get-DadJoke {
     # Created by @steviecoaster
     $header = @{ Accept = "application/json" }
     $joke = Invoke-RestMethod -Uri "https://icanhazdadjoke.com/" -Method Get -Headers $header 

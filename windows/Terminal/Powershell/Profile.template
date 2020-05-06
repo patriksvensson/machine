@@ -6,10 +6,12 @@ $Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
 # Load the profile
 . "<<PROFILE>>"
 
+$IsArm = Test-Arm;
+
 Enter-GitHubLocation
 Clear-Host
 
-# Load Starship
+# Load Posh-git
 $Global:PoshGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if ($Global:PoshGitInstalled) {
     Write-Host "Initializing posh-git... " -NoNewline
@@ -20,10 +22,14 @@ else {
     Write-Host "The posh-git module has not been installed." -ForegroundColor Red
 }
 
-# Initialize Starship
-$StarshipVersion = starship --version;
-if ($null -ne $StarshipVersion -and $StarshipVersion -ne "") {
-    Write-Host "Initializing Starship... " -NoNewline
-    Invoke-Expression (&starship init powershell)
-    Write-Host "Done!" -ForegroundColor Green
+if($IsArm) {
+    . "<<PROMPT>>"
+} else {
+    # Initialize Starship
+    $StarshipVersion = starship --version;
+    if ($null -ne $StarshipVersion -and $StarshipVersion -ne "") {
+        Write-Host "Initializing Starship... " -NoNewline
+        Invoke-Expression (&starship init powershell)
+        Write-Host "Done!" -ForegroundColor Green
+    }
 }

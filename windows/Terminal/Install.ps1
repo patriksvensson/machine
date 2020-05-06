@@ -27,6 +27,12 @@ if (!$PowerShellProfile.IsPresent -and !$Fonts.IsPresent -and !$WindowsTerminalP
     Exit;
 }
 
+$Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture;
+$IsArm = $false;
+if($Architecture.StartsWith("ARM")) {
+    $IsArm = $true;
+}
+
 #################################################################
 # POWERSHELL
 #################################################################
@@ -37,9 +43,11 @@ if($All.IsPresent -or $PowerShellProfile.IsPresent) {
         Write-Host "Adding PowerShell profile...";
         $PowerShellProfileTemplatePath = Join-Path $PWD "PowerShell/Profile.template";
         $PowerShellProfilePath = (Join-Path $PWD "PowerShell/Roaming.ps1");
+        $PowerShellPromptPath = (Join-Path $PWD "PowerShell/Prompt.ps1");
         Copy-Item -Path $PowerShellProfileTemplatePath -Destination $PROFILE;
         # Replace placeholder values
         (Get-Content -path $PROFILE -Raw) -Replace '<<PROFILE>>', $PowerShellProfilePath | Set-Content -Path $PROFILE
+        (Get-Content -path $PROFILE -Raw) -Replace '<<PROMPT>>', $PowerShellPromptPath | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<SOURCELOCATION>>', "$($Global:SourceLocation)" | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<AZURELOCATION>>', "$($Global:AzureDevOpsSourceLocation)" | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<BITBUCKETLOCATION>>', "$($Global:BitBucketSourceLocation)" | Set-Content -Path $PROFILE
@@ -94,21 +102,23 @@ if($All.IsPresent -or $Fonts.IsPresent) {
 # STARSHIP
 #################################################################
 
-if($All.IsPresent -or $StarshipProfile.IsPresent) {
-    Assert-Administrator -FailMessage "Installing Starship profile requires administrator privilegies.";
-    Assert-StarshipInstalled;
-
-    # Create symlink to Starship profile
-    $StarshipSource = Join-Path $PWD "../../config/starship.toml";
-    $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
-    $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
-    if(!(Test-Path $StarshipConfigDirectory)) {
-        Write-Host "Creating ~/.config directory...";
-        New-Item $StarshipConfigDirectory -ItemType Directory;
+if(!$IsArm) {
+    if($All.IsPresent -or $StarshipProfile.IsPresent) {
+        Assert-Administrator -FailMessage "Installing Starship profile requires administrator privilegies.";
+        Assert-StarshipInstalled;
+    
+        # Create symlink to Starship profile
+        $StarshipSource = Join-Path $PWD "../../config/starship.toml";
+        $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
+        $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
+        if(!(Test-Path $StarshipConfigDirectory)) {
+            Write-Host "Creating ~/.config directory...";
+            New-Item $StarshipConfigDirectory -ItemType Directory;
+        }
+        if(Test-Path $StarshipConfigDestination) {
+            Remove-Item -Path $StarshipConfigDestination;
+        }
+        Write-Host "Creating symlink to Starship profile..."
+        New-Item -Path $StarshipConfigDestination -ItemType SymbolicLink -Value $StarshipSource | Out-Null;
     }
-    if(Test-Path $StarshipConfigDestination) {
-        Remove-Item -Path $StarshipConfigDestination;
-    }
-    Write-Host "Creating symlink to Starship profile..."
-    New-Item -Path $StarshipConfigDestination -ItemType SymbolicLink -Value $StarshipSource | Out-Null;
 }

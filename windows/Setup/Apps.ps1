@@ -36,7 +36,6 @@ New-Item -Path $ChocoCachePath -ItemType Directory -Force
 
 choco upgrade --cache="$ChocoCachePath" --yes discord
 choco upgrade --cache="$ChocoCachePath" --yes slack
-choco upgrade --cache="$ChocoCachePath" --yes spotify
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-edge
 choco upgrade --cache="$ChocoCachePath" --yes vscode
 choco upgrade --cache="$ChocoCachePath" --yes git
@@ -57,6 +56,7 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes steam
     choco upgrade --cache="$ChocoCachePath" --yes uplay
     choco upgrade --cache="$ChocoCachePath" --yes origin
+    choco upgrade --cache="$ChocoCachePath" --yes spotify
     choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
     choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
     choco upgrade --cache="$ChocoCachePath" --yes geforce-experience

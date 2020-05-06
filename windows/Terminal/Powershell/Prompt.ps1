@@ -7,9 +7,6 @@ $Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if ($Global:PoShGitInstalled) {
     Import-Module posh-git
 }
-else {
-    Write-Host "PoSh-Git has not been installed."
-}
 
 # The prompt
 Function Global:Prompt() {

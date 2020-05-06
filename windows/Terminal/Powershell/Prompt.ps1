@@ -67,7 +67,9 @@ Function Global:Prompt() {
     $windowsPrincipal = new-object 'System.Security.Principal.WindowsPrincipal' $windowsIdentity
     $IsAdministrator = $windowsPrincipal.IsInRole("Administrators") -eq 1;
     $PromptColor = if ($IsAdministrator) {[ConsoleColor]::Red} Else {[ConsoleColor]::Green}
-    Write-Host "λ" -n -f ($PromptColor)
+    Write-Host (get-date).ToString('HH:mm:ss') -n -f DarkYellow
+    Write-Host " " -n
+    Write-Host "" -n -f ($PromptColor)
 
     # Set the window title
     if ($null -eq $Global:WindowTitle) {

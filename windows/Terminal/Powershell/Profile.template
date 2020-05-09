@@ -20,9 +20,10 @@ else {
     Write-Host "The posh-git module has not been installed." -ForegroundColor Red
 }
 
-if (Test-Path "<<LOCALPROFILE>>") {
+$Global:LOCALPROFILE = "<<LOCALPROFILE>>"
+if (Test-Path $Global:LOCALPROFILE) {
     Write-Host "Initializing local profile... " -NoNewline
-    . "<<LOCALPROFILE>>"
+    . $Global:LOCALPROFILE
     Write-Host "Done!" -ForegroundColor Green
 }
 

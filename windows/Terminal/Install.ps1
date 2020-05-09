@@ -44,10 +44,12 @@ if($All.IsPresent -or $PowerShellProfile.IsPresent) {
         $PowerShellProfileTemplatePath = Join-Path $PWD "PowerShell/Profile.template";
         $PowerShellProfilePath = (Join-Path $PWD "PowerShell/Roaming.ps1");
         $PowerShellPromptPath = (Join-Path $PWD "PowerShell/Prompt.ps1");
+        $PowerShellLocalProfilePath = Join-Path (get-item $PROFILE).Directory.FullName "LocalProfile.ps1"
         Copy-Item -Path $PowerShellProfileTemplatePath -Destination $PROFILE;
         # Replace placeholder values
         (Get-Content -path $PROFILE -Raw) -Replace '<<PROFILE>>', $PowerShellProfilePath | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<PROMPT>>', $PowerShellPromptPath | Set-Content -Path $PROFILE
+        (Get-Content -path $PROFILE -Raw) -Replace '<<LOCALPROFILE>>', $PowerShellLocalProfilePath | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<SOURCELOCATION>>', "$($Global:SourceLocation)" | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<AZURELOCATION>>', "$($Global:AzureDevOpsSourceLocation)" | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<BITBUCKETLOCATION>>', "$($Global:BitBucketSourceLocation)" | Set-Content -Path $PROFILE

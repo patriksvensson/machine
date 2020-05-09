@@ -20,6 +20,12 @@ else {
     Write-Host "The posh-git module has not been installed." -ForegroundColor Red
 }
 
+if (Test-Path "<<LOCALPROFILE>>") {
+    Write-Host "Initializing local profile... " -NoNewline
+    . "<<LOCALPROFILE>>"
+    Write-Host "Done!" -ForegroundColor Green
+}
+
 if(Test-Arm -or $null -ne $env:PREFER_OLD_PROMPT) {
     . "<<PROMPT>>"
 } else {

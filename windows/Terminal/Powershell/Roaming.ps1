@@ -76,10 +76,11 @@ Function Get-DadJoke {
 # Aliases
 Set-Alias open start
 Set-Alias ccl Copy-CurrentLocation
+Set-Alias github Enter-GitHubLocation
 Set-Alias gs Enter-GitHubLocation
-Set-Alias gsa Enter-AzureDevOpsLocation
-Set-Alias gsb Enter-BitBucketLocation
-Set-Alias gsg Enter-GitLabLocation
+Set-Alias azure Enter-AzureDevOpsLocation
+Set-Alias bitbucket Enter-BitBucketLocation
+Set-Alias gitlab Enter-GitLabLocation
 Set-Alias mcd New-Directory
 Set-Alias back popd
 Set-Alias sw Set-WindowTitle

@@ -37,7 +37,6 @@ New-Item -Path $ChocoCachePath -ItemType Directory -Force
 choco upgrade --cache="$ChocoCachePath" --yes discord
 choco upgrade --cache="$ChocoCachePath" --yes slack
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-edge
-choco upgrade --cache="$ChocoCachePath" --yes vscode
 choco upgrade --cache="$ChocoCachePath" --yes git
 choco upgrade --cache="$ChocoCachePath" --yes ghostscript.app
 choco upgrade --cache="$ChocoCachePath" --yes 7zip.install
@@ -47,9 +46,9 @@ choco upgrade --cache="$ChocoCachePath" --yes paint.net
 choco upgrade --cache="$ChocoCachePath" --yes chocolateygui
 choco upgrade --cache="$ChocoCachePath" --yes powershell-core
 choco upgrade --cache="$ChocoCachePath" --yes ripgrep
-choco upgrade --cache="$ChocoCachePath" --yes starship
 choco upgrade --cache="$ChocoCachePath" --yes microsoft-windows-terminal
 choco upgrade --cache="$ChocoCachePath" --yes winsnap
+choco upgrade --cache="$ChocoCachePath" --yes gsudo
 
 if(!$IsArm) {
     # x86/x64 only
@@ -57,6 +56,7 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes uplay
     choco upgrade --cache="$ChocoCachePath" --yes origin
     choco upgrade --cache="$ChocoCachePath" --yes spotify
+    choco upgrade --cache="$ChocoCachePath" --yes starship
     choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
     choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
     choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
@@ -64,6 +64,7 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes nodejs
     choco upgrade --cache="$ChocoCachePath" --yes cmake
     choco upgrade --cache="$ChocoCachePath" --yes curl
+    choco upgrade --cache="$ChocoCachePath" --yes vscode
     choco upgrade --cache="$ChocoCachePath" --yes visualstudio2019professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
     choco upgrade --cache="$ChocoCachePath" --yes dotpeek --pre 
 }
@@ -72,15 +73,18 @@ if(!$IsArm) {
 # Install VSCode extensions
 ##########################################################################
 
-code --install-extension cake-build.cake-vscode
-code --install-extension matklad.rust-analyzer
-code --install-extension ms-vscode.powershell
-code --install-extension bungcip.better-toml
-code --install-extension ms-azuretools.vscode-docker
-code --install-extension octref.vetur
-code --install-extension ms-vscode-remote.remote-wsl
-code --install-extension jolaleye.horizon-theme-vscode
-code --install-extension vscode-icons-team.vscode-icons
+if(!$IsArm) {
+    # x86/x64 only
+    code --install-extension cake-build.cake-vscode
+    code --install-extension matklad.rust-analyzer
+    code --install-extension ms-vscode.powershell
+    code --install-extension bungcip.better-toml
+    code --install-extension ms-azuretools.vscode-docker
+    code --install-extension octref.vetur
+    code --install-extension ms-vscode-remote.remote-wsl
+    code --install-extension jolaleye.horizon-theme-vscode
+    code --install-extension vscode-icons-team.vscode-icons
+}
 
 ##########################################################################
 # Install Rust

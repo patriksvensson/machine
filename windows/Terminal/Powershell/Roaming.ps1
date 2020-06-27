@@ -86,3 +86,4 @@ Set-Alias back popd
 Set-Alias sw Set-WindowTitle
 Set-Alias f Find-Files
 Set-Alias dad-joke Get-DadJoke
+Set-Alias sudo gsudo

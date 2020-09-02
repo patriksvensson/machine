@@ -152,6 +152,12 @@
     ,
     "keybindings": [
         {
+            "command": "commandPalette",
+            "keys": [
+                "ctrl+shift+p"
+            ]
+        },
+        {
             "command": "newTab",
             "keys": [
                 "ctrl+t"

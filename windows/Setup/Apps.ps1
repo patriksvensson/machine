@@ -84,6 +84,7 @@ if(!$IsArm) {
     code --install-extension ms-vscode-remote.remote-wsl
     code --install-extension jolaleye.horizon-theme-vscode
     code --install-extension vscode-icons-team.vscode-icons
+    code --install-extension hediet.vscode-drawio
 }
 
 ##########################################################################

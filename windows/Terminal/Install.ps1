@@ -107,45 +107,34 @@ if($All.IsPresent -or $Fonts.IsPresent) {
 #################################################################
 
 if($All.IsPresent -or $OhMyPosh.IsPresent) {
-    $OhMyPoshPath = "$env:LOCALAPPDATA\Oh-My-Posh"
-    $OhMyPoshExe = Join-Path $OhMyPoshPath "oh-my-posh.exe"
-    $OhMyPoshThemes = "~\.poshthemes"
-    $OhMyPoshZip = Join-Path $OhMyPoshThemes "themes.zip"
-
-    if(!(Test-Path $OhMyPoshExe) -or $Force.IsPresent) {
-        Write-Host "Downloading Oh-My-Posh..."
-        New-Item -Path $env:LOCALAPPDATA\Oh-My-Posh -ItemType Directory -ErrorAction Ignore | Out-Null
-
-        if(Test-Path $OhMyPoshExe) {
-            Remove-Item $OhMyPoshExe | Out-Null
-        }
-
-        if($IsArm) {
-            # Download ARM version
+    if($IsArm) {
+        # Not yet supported on ARM
+        Write-Host "Oh-My-Posh is not supported on ARM"
+    } else {
+        $OhMyPoshPath = "$env:LOCALAPPDATA\Oh-My-Posh"
+        $OhMyPoshExe = Join-Path $OhMyPoshPath "oh-my-posh.exe"
+    
+        # Download?
+        if(!(Test-Path $OhMyPoshExe) -or $Force.IsPresent) {
+            Write-Host "Downloading Oh-My-Posh..."
+            New-Item -Path $env:LOCALAPPDATA\Oh-My-Posh -ItemType Directory -ErrorAction Ignore | Out-Null
+    
+            if(Test-Path $OhMyPoshExe) {
+                Remove-Item $OhMyPoshExe | Out-Null
+            }
+    
             Invoke-Webrequest "https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/posh-windows-amd64.exe" -OutFile $OhMyPoshExe
         } else {
-            # Download x86 version
-            Invoke-Webrequest "https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/posh-windows-amd64.exe" -OutFile $OhMyPoshExe
+            Write-Debug "Oh-My-Posh already installed"
         }
-    } else {
-        Write-Debug "Oh-My-Posh already installed"
-    }
-    
-    $CurrentPath = [System.Environment]::GetEnvironmentVariable("PATH", "User");
-    if(!($CurrentPath -like "*$OhMyPosh*")) {
-        Write-Host "Setting PATH variable..."
-        [Environment]::SetEnvironmentVariable("PATH", "$CurrentPath;$OhMyPosh", "User")
-    } else {
-        Write-Debug "PATH variable already set"
-    }
-
-    if(!(Test-Path $OhMyPoshThemes) -or $Force.IsPresent) {
-        New-Item -Path $OhMyPoshThemes -ItemType Directory -ErrorAction Ignore | Out-Null
-        Write-Host "Downloading Oh-My-Posh themes..."
-        Invoke-Webrequest https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/themes.zip -OutFile $OhMyPoshZip
-        Expand-Archive $OhMyPoshZip -DestinationPath $OhMyPoshThemes -Force
-        Remove-Item $OhMyPoshZip
-    } else {
-        Write-Debug "Oh-My-Posh themes already installed"
+        
+        # Add to PATH?
+        $CurrentPath = [System.Environment]::GetEnvironmentVariable("PATH", "User");
+        if(!($CurrentPath -like "*$OhMyPoshPath*")) {
+            Write-Host "Setting PATH variable..."
+            [Environment]::SetEnvironmentVariable("PATH", "$CurrentPath;$OhMyPoshPath", "User")
+        } else {
+            Write-Debug "PATH variable already set"
+        }
     }
 }

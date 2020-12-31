@@ -27,14 +27,9 @@ if (Test-Path $Global:LOCALPROFILE) {
     Write-Host "Done!" -ForegroundColor Green
 }
 
-if(Test-Arm -or $null -ne $env:PREFER_OLD_PROMPT) {
+if($env:PREFER_OLD_PROMPT) {
     . "<<PROMPT>>"
 } else {
-    # Initialize Starship
-    $StarshipVersion = starship --version;
-    if ($null -ne $StarshipVersion -and $StarshipVersion -ne "") {
-        Write-Host "Initializing Starship... " -NoNewline
-        Invoke-Expression (&starship init powershell)
-        Write-Host "Done!" -ForegroundColor Green
-    }
+    # Initialize Oh-My-Posh
+    Invoke-Expression (oh-my-posh --init --shell pwsh --config "<<MACHINE>>config\oh-my-posh.json")
 }

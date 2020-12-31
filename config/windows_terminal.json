@@ -11,7 +11,7 @@
             "colorScheme": "Tomorrow Night",
             "fontFace": "CaskaydiaCove Nerd Font Mono",
             "fontSize": 12,
-            "useAcrylic": true,
+            "useAcrylic": false,
             "acrylicOpacity": 0.9,
             "scrollbarState": "visible",
             "snapOnInput": true
@@ -22,7 +22,7 @@
                 "name": "Windows PowerShell",
                 "background": "#222632",
                 "commandline": "powershell.exe",
-                "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell.png",
+                
                 "backgroundImageAlignment": "bottomRight",
                 "backgroundImageStretchMode": "none",
                 "backgroundImageOpacity": 0.25
@@ -50,7 +50,7 @@
             },
             {
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-                "hidden": true,
+                "hidden": false,
                 "name": "PowerShell Core",
                 "source": "Windows.Terminal.PowershellCore",
                 "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell_core.png",

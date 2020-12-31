@@ -9,7 +9,7 @@ Param(
     [Parameter(ParameterSetName='Granular')]
     [switch]$WindowsTerminalProfile,
     [Parameter(ParameterSetName='Granular')]
-    [switch]$StarshipProfile,
+    [switch]$OhMyPosh,
     [switch]$Force
 )
 
@@ -21,7 +21,7 @@ Param(
 
 # Nothing selected? Show help screen.
 if (!$PowerShellProfile.IsPresent -and !$Fonts.IsPresent -and !$WindowsTerminalProfile.IsPresent `
-    -and !$StarshipProfile.IsPresent -and !$All.IsPresent)
+    -and !$OhMyPosh.IsPresent -and !$All.IsPresent)
 {
     Get-Help .\Install.ps1
     Exit;
@@ -41,12 +41,14 @@ if($All.IsPresent -or $PowerShellProfile.IsPresent) {
     if(!(Test-Path $PROFILE) -or $Force.IsPresent -or $All.IsPresent) {
         # Update PowerShell profile
         Write-Host "Adding PowerShell profile...";
-        $PowerShellProfileTemplatePath = Join-Path $PWD "PowerShell/Profile.template";
-        $PowerShellProfilePath = (Join-Path $PWD "PowerShell/Roaming.ps1");
-        $PowerShellPromptPath = (Join-Path $PWD "PowerShell/Prompt.ps1");
-        $PowerShellLocalProfilePath = Join-Path (get-item $PROFILE).Directory.FullName "LocalProfile.ps1"
+        $MachinePath = (Get-Item (Join-Path $PSScriptRoot "../../")).FullName
+        $PowerShellProfileTemplatePath = Join-Path $PSScriptRoot "PowerShell/Profile.template";
+        $PowerShellProfilePath = (Join-Path $PSScriptRoot "PowerShell/Roaming.ps1");
+        $PowerShellPromptPath = (Join-Path $PSScriptRoot "PowerShell/Prompt.ps1");
+        $PowerShellLocalProfilePath = Join-Path (Get-Item $PROFILE).Directory.FullName "LocalProfile.ps1"
         Copy-Item -Path $PowerShellProfileTemplatePath -Destination $PROFILE;
         # Replace placeholder values
+        (Get-Content -path $PROFILE -Raw) -Replace '<<MACHINE>>', $MachinePath | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<PROFILE>>', $PowerShellProfilePath | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<PROMPT>>', $PowerShellPromptPath | Set-Content -Path $PROFILE
         (Get-Content -path $PROFILE -Raw) -Replace '<<LOCALPROFILE>>', $PowerShellLocalProfilePath | Set-Content -Path $PROFILE
@@ -101,26 +103,49 @@ if($All.IsPresent -or $Fonts.IsPresent) {
 }
 
 #################################################################
-# STARSHIP
+# OH-MY-POSH
 #################################################################
 
-if(!$IsArm) {
-    if($All.IsPresent -or $StarshipProfile.IsPresent) {
-        Assert-Administrator -FailMessage "Installing Starship profile requires administrator privilegies.";
-        Assert-StarshipInstalled;
+if($All.IsPresent -or $OhMyPosh.IsPresent) {
+    $OhMyPoshPath = "$env:LOCALAPPDATA\Oh-My-Posh"
+    $OhMyPoshExe = Join-Path $OhMyPoshPath "oh-my-posh.exe"
+    $OhMyPoshThemes = "~\.poshthemes"
+    $OhMyPoshZip = Join-Path $OhMyPoshThemes "themes.zip"
+
+    if(!(Test-Path $OhMyPoshExe) -or $Force.IsPresent) {
+        Write-Host "Downloading Oh-My-Posh..."
+        New-Item -Path $env:LOCALAPPDATA\Oh-My-Posh -ItemType Directory -ErrorAction Ignore | Out-Null
+
+        if(Test-Path $OhMyPoshExe) {
+            Remove-Item $OhMyPoshExe | Out-Null
+        }
+
+        if($IsArm) {
+            # Download ARM version
+            Invoke-Webrequest "https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/posh-windows-amd64.exe" -OutFile $OhMyPoshExe
+        } else {
+            # Download x86 version
+            Invoke-Webrequest "https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/posh-windows-amd64.exe" -OutFile $OhMyPoshExe
+        }
+    } else {
+        Write-Debug "Oh-My-Posh already installed"
+    }
     
-        # Create symlink to Starship profile
-        $StarshipSource = Join-Path $PWD "../../config/starship.toml";
-        $StarshipConfigDirectory = Join-Path $env:USERPROFILE ".config";
-        $StarshipConfigDestination = Join-Path $StarshipConfigDirectory "starship.toml";
-        if(!(Test-Path $StarshipConfigDirectory)) {
-            Write-Host "Creating ~/.config directory...";
-            New-Item $StarshipConfigDirectory -ItemType Directory;
-        }
-        if(Test-Path $StarshipConfigDestination) {
-            Remove-Item -Path $StarshipConfigDestination;
-        }
-        Write-Host "Creating symlink to Starship profile..."
-        New-Item -Path $StarshipConfigDestination -ItemType SymbolicLink -Value $StarshipSource | Out-Null;
+    $CurrentPath = [System.Environment]::GetEnvironmentVariable("PATH", "User");
+    if(!($CurrentPath -like "*$OhMyPosh*")) {
+        Write-Host "Setting PATH variable..."
+        [Environment]::SetEnvironmentVariable("PATH", "$CurrentPath;$OhMyPosh", "User")
+    } else {
+        Write-Debug "PATH variable already set"
+    }
+
+    if(!(Test-Path $OhMyPoshThemes) -or $Force.IsPresent) {
+        New-Item -Path $OhMyPoshThemes -ItemType Directory -ErrorAction Ignore | Out-Null
+        Write-Host "Downloading Oh-My-Posh themes..."
+        Invoke-Webrequest https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/themes.zip -OutFile $OhMyPoshZip
+        Expand-Archive $OhMyPoshZip -DestinationPath $OhMyPoshThemes -Force
+        Remove-Item $OhMyPoshZip
+    } else {
+        Write-Debug "Oh-My-Posh themes already installed"
     }
 }

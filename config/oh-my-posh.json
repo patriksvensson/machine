@@ -46,7 +46,15 @@
                         "status_colors_enabled": true,
                         "github_icon": " "
                     }
-                }
+                },
+                {
+                    "type": "dotnet",
+                    "style": "plain",
+                    "foreground": "magenta",
+                    "properties": {
+                      "prefix": " [.NET] "
+                    }
+                  }
             ]
         },
         {

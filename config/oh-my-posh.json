@@ -40,9 +40,13 @@
                     "properties": {
                         "prefix": " on ",
                         "postfix": "",
+                        "ahead_color": "red",
+                        "behind_color": "green",
+                        "working_color": "red",
+                        "staging_color": "green",
+                        "color_background": false,
                         "display_stash_count": true,
                         "display_upstream_icon": true,
-                        "staging_color": "red",
                         "status_colors_enabled": true,
                         "github_icon": " "
                     }

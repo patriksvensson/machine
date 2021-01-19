@@ -33,7 +33,7 @@ if($Architecture.StartsWith("ARM")) {
     $IsArm = $true;
 }
 
-if($env:PREFER_OLD_PROMPT -or $IsArm) {
+if($env:PREFER_OLD_PROMPT) {
     . "<<PROMPT>>"
 } else {
     # Initialize Oh-My-Posh

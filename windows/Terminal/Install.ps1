@@ -107,34 +107,33 @@ if($All.IsPresent -or $Fonts.IsPresent) {
 #################################################################
 
 if($All.IsPresent -or $OhMyPosh.IsPresent) {
-    if($IsArm) {
-        # Not yet supported on ARM
-        Write-Host "Oh-My-Posh is not supported on ARM"
-    } else {
-        $OhMyPoshPath = "$env:LOCALAPPDATA\Oh-My-Posh"
-        $OhMyPoshExe = Join-Path $OhMyPoshPath "oh-my-posh.exe"
-    
-        # Download?
-        if(!(Test-Path $OhMyPoshExe) -or $Force.IsPresent) {
-            Write-Host "Downloading Oh-My-Posh..."
-            New-Item -Path $env:LOCALAPPDATA\Oh-My-Posh -ItemType Directory -ErrorAction Ignore | Out-Null
-    
-            if(Test-Path $OhMyPoshExe) {
-                Remove-Item $OhMyPoshExe | Out-Null
-            }
-    
+    $OhMyPoshPath = "$env:LOCALAPPDATA\Oh-My-Posh"
+    $OhMyPoshExe = Join-Path $OhMyPoshPath "oh-my-posh.exe"
+
+    # Download?
+    if(!(Test-Path $OhMyPoshExe) -or $Force.IsPresent) {
+        Write-Host "Downloading Oh-My-Posh..."
+        New-Item -Path $env:LOCALAPPDATA\Oh-My-Posh -ItemType Directory -ErrorAction Ignore | Out-Null
+
+        if(Test-Path $OhMyPoshExe) {
+            Remove-Item $OhMyPoshExe | Out-Null
+        }
+
+        if($IsArm) {
+            Invoke-Webrequest "https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/posh-windows-386.exe" -OutFile $OhMyPoshExe
+        } else {
             Invoke-Webrequest "https://github.com/JanDeDobbeleer/oh-my-posh3/releases/latest/download/posh-windows-amd64.exe" -OutFile $OhMyPoshExe
-        } else {
-            Write-Debug "Oh-My-Posh already installed"
         }
-        
-        # Add to PATH?
-        $CurrentPath = [System.Environment]::GetEnvironmentVariable("PATH", "User");
-        if(!($CurrentPath -like "*$OhMyPoshPath*")) {
-            Write-Host "Setting PATH variable..."
-            [Environment]::SetEnvironmentVariable("PATH", "$CurrentPath;$OhMyPoshPath", "User")
-        } else {
-            Write-Debug "PATH variable already set"
-        }
+    } else {
+        Write-Debug "Oh-My-Posh already installed"
+    }
+    
+    # Add to PATH?
+    $CurrentPath = [System.Environment]::GetEnvironmentVariable("PATH", "User");
+    if(!($CurrentPath -like "*$OhMyPoshPath*")) {
+        Write-Host "Setting PATH variable..."
+        [Environment]::SetEnvironmentVariable("PATH", "$CurrentPath;$OhMyPoshPath", "User")
+    } else {
+        Write-Debug "PATH variable already set"
     }
 }

@@ -22,7 +22,7 @@
                 "name": "Windows PowerShell",
                 "background": "#222632",
                 "commandline": "powershell.exe",
-                
+                "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell.png",
                 "backgroundImageAlignment": "bottomRight",
                 "backgroundImageStretchMode": "none",
                 "backgroundImageOpacity": 0.25

@@ -3,6 +3,9 @@ $Global:AzureDevOpsSourceLocation = "<<AZURELOCATION>>"
 $Global:BitBucketSourceLocation = "<<BITBUCKETLOCATION>>"
 $Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
 
+# Set the output encoding
+[console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+
 # Load the profile
 . "<<PROFILE>>"
 

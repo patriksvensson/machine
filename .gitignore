@@ -1,3 +1,7 @@
+# macOS
+.DS_Store
+
+# Windows
 Run.ps1
 Sandbox.cmd
 Sandbox.wsb

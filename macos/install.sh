@@ -15,6 +15,7 @@ brew install --cask iterm2
 brew install --cask slack
 brew install --cask discord
 brew install --cask ripgrep
+brew install --cask marta
 
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh

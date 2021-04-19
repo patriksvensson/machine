@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ########################################################
 # HOMEBREW
 ########################################################
@@ -7,6 +9,35 @@ if ! [[ $(grep "bin/brew shellenv" "$HOME/.zprofile") ]] ; then
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile    
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+########################################################
+# APPLICATIONS
+########################################################
+
+install_cask () { 
+    if brew info "${1}" | grep "Not installed" >/dev/null 2>&1 ; then 
+        brew install --cask "${1}"
+    else
+        echo "The brew cask ${1} has already been installed"
+    fi
+}
+
+install_package () { 
+    if brew info "${1}" | grep "Not installed" >/dev/null 2>&1 ; then 
+        brew install "${1}"
+    else
+        echo "The brew package ${1} has already been installed"
+    fi
+}
+
+install_package coreutils
+install_package ripgrep
+install_cask visual-studio-code
+install_cask iterm2
+install_cask slack
+install_cask discord
+install_cask marta
+install_cask spotify
 
 ########################################################
 # OH-MY-POSH
@@ -20,29 +51,10 @@ else
 fi
 
 if ! [[ $(grep "oh-my-posh" "$HOME/.zshrc") ]] ; then
-    eval "$(oh-my-posh --init --shell zsh --config $HOME/Source/github/patriksvensson/machine/config/oh-my-posh.json)"
+    OMP_CONFIG=$(grealpath ../config/oh-my-posh.json)
+    eval "$(oh-my-posh --init --shell zsh --config $OMP_CONFIG)"
     source $HOME/.zshrc
 fi   
-
-########################################################
-# APPLICATIONS
-########################################################
-
-install_cask () { 
-        if brew info "${1}" &>/dev/null; then
-        echo "The brew cask ${1} has already been installed"
-    else
-        brew install --cask "${1}" 
-    fi
-}
-
-install_cask visual-studio-code
-install_cask iterm2
-install_cask slack
-install_cask discord
-install_cask ripgrep
-install_cask marta
-install_cask spotify
 
 ########################################################
 # RUST

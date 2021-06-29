@@ -54,7 +54,6 @@ if(!$IsArm) {
     # x86/x64 only
     choco upgrade --cache="$ChocoCachePath" --yes steam
     choco upgrade --cache="$ChocoCachePath" --yes uplay
-    choco upgrade --cache="$ChocoCachePath" --yes origin
     choco upgrade --cache="$ChocoCachePath" --yes spotify
     choco upgrade --cache="$ChocoCachePath" --yes starship
     choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer

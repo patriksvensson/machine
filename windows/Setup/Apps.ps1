@@ -55,7 +55,6 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes steam
     choco upgrade --cache="$ChocoCachePath" --yes uplay
     choco upgrade --cache="$ChocoCachePath" --yes spotify
-    choco upgrade --cache="$ChocoCachePath" --yes starship
     choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
     choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
     choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
@@ -69,7 +68,7 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes zoom
     choco upgrade --cache="$ChocoCachePath" --yes poshgit
     choco upgrade --cache="$ChocoCachePath" --yes powertoys
-    choco upgrade --cache="$ChocoCachePath" --yes  ncrunch-vs2019
+    choco upgrade --cache="$ChocoCachePath" --yes ncrunch-vs2019
 }
 
 ##########################################################################

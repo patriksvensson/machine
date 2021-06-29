@@ -69,6 +69,7 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes poshgit
     choco upgrade --cache="$ChocoCachePath" --yes powertoys
     choco upgrade --cache="$ChocoCachePath" --yes ncrunch-vs2019
+    choco upgrade --cache="$ChocoCachePath" --yes streamdeck
 }
 
 ##########################################################################

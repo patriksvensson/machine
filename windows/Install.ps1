@@ -5,12 +5,14 @@ Param(
     [Parameter(ParameterSetName='Software')]
     [switch]$Ubuntu,
     [Parameter(ParameterSetName='Software')]
-    [switch]$Apps
+    [switch]$Apps,
+    [Parameter(ParameterSetName='Software')]
+    [switch]$VisualStudioExtensions
 )
 
 # Nothing selected? Show help screen.
 if (!$Prereqs.IsPresent -and !$Ubuntu.IsPresent -and !$Apps.IsPresent `
-    -and !$VisualStudio.IsPresent -and !$Starship.IsPresent)
+    -and !$VisualStudioExtensions.IsPresent)
 {
     Get-Help .\Install.ps1
     Exit;
@@ -34,6 +36,10 @@ if ($Prereqs.IsPresent) {
 }
 if ($Apps.IsPresent) {
     Install-BoxstarterPackage ./Setup/Apps.ps1 -DisableReboots
+    RefreshEnv
+}
+if ($VisualStudioExtensions.IsPresent) {
+    Install-BoxstarterPackage ./Setup/VS-Extensions.ps1 -DisableReboots
     RefreshEnv
 }
 if ($Ubuntu.IsPresent) {

@@ -70,6 +70,7 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes zoom
     choco upgrade --cache="$ChocoCachePath" --yes poshgit
     choco upgrade --cache="$ChocoCachePath" --yes powertoys
+    choco upgrade --cache="$ChocoCachePath" --yes  ncrunch-vs2019
 }
 
 ##########################################################################
@@ -143,7 +144,6 @@ Function Install-VSExtension([String] $PackageName)
 Write-Host "Installing Visual Studio extensions" -ForegroundColor Yellow
 Write-Host "NOTE: Script might appear unresponsive"
 
-Install-VSExtension -PackageName "NCrunch.NCrunchforVisualStudio"
 Install-VSExtension -PackageName "MadsKristensen.Tweaks"
 
 ##########################################################################

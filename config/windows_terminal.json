@@ -218,6 +218,28 @@
                 "hidden": false,
                 "icon": "%WINDOWSTERMINAL_ICONS%/rpi.png",
                 "name": "Raspberry Pi"
+            },
+            {
+                "colorScheme": "Tomorrow Night",
+                "commandline": "powershell.exe",
+                "cursorShape": "vintage",
+                "experimental.retroTerminalEffect": true,
+                "fontSize": 30,
+                "name": "Presentation",
+                "padding": "8",
+                "scrollbarState": "hidden",
+                "startingDirectory": "C:\\Users\\Patrik\\Source\\local\\Slides\\Slides",
+                "tabTitle": "Presentation"
+            },
+            {
+                "commandline": "powershell.exe",
+                "cursorShape": "vintage",
+                "experimental.retroTerminalEffect": true,
+                "fontSize": 18,
+                "name": "Demo",
+                "padding": "8",
+                "scrollbarState": "hidden",
+                "tabTitle": "Demo"
             }
         ]
     },

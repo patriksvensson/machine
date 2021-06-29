@@ -1,4 +1,5 @@
 $Global:SourceLocation = "<<SOURCELOCATION>>"
+$Global:GitHubSourceLocation = "<<GITHUBLOCATION>>"
 $Global:AzureDevOpsSourceLocation = "<<AZURELOCATION>>"
 $Global:BitBucketSourceLocation = "<<BITBUCKETLOCATION>>"
 $Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
@@ -9,7 +10,15 @@ $Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
 # Load the profile
 . "<<PROFILE>>"
 
-Enter-GitHubLocation
+# No Working directory specified?
+$PSCoreWorkingDirSet = $PSVersionTable.PSEdition -ne 'Desktop' -and [Environment]::GetCommandLineArgs() -match '^-(WorkingDirectory|wd|wo|wor|work|worki|workin|working|workingd|workingdi|workingdir|workingdire|workingdirec|workingdirect|workingdirecto|workingdirector)';
+$PSWorkingDirSet = [Environment]::CommandLine -match '\b(Set-Location|sl|cd|chdir|Push-Location|pushd|pul)\b';
+$WorkingDirSpecified = $PSCoreWorkingDirSet -or $PSWorkingDirSet;
+if(!$WorkingDirSpecified) {
+    # Start with GitHub directory
+    Enter-GitHubLocation
+}
+
 Clear-Host
 
 # Load Posh-git
@@ -17,6 +26,7 @@ $Global:PoshGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if ($Global:PoshGitInstalled) {
     Write-Host "Initializing posh-git... " -NoNewline
     Import-Module posh-git
+    $env:POSH_GIT_ENABLED = $true
     Write-Host "Done!" -ForegroundColor Green
 }
 else {

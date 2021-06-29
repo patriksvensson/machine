@@ -38,6 +38,7 @@
                     "style": "plain",
                     "foreground": "green",
                     "properties": {
+                        "display_status": true,
                         "prefix": " on ",
                         "postfix": "",
                         "ahead_color": "red",

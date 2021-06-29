@@ -1,31 +1,3 @@
-Function Find-Files([string]$Pattern) {
-    if ($null -ne $Pattern -and $Pattern -ne "") {
-        Get-Childitem -Include $Pattern -File -Recurse -ErrorAction SilentlyContinue `
-        | ForEach-Object { Resolve-Path -Relative $_ | Write-Host }
-    }
-}
-
-Function Test-Arm() {
-    $Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture;
-    if ($Architecture.StartsWith("ARM")) {
-        return $true;
-    }
-    return $false;
-}
-
-Function Set-As([Parameter(Mandatory = $true)][string]$Name) {
-    New-PSDrive -PSProvider FileSystem -Name $Name -Root . -Scope Global | Out-Null
-    Set-Location -LiteralPath "$($Name):"
-}
-
-# Add virtual drives for projects
-Function Add-VirtualDrive([string]$Path, [string]$Name) {
-    Push-Location
-    Set-Location $Path
-    Set-As $Name
-    Pop-Location
-}
-
 Function Clear-Docker() {
     & docker ps -a -q | ForEach-Object { docker rm $_ }
     & docker images -q | ForEach-Object { docker rmi $_ }
@@ -48,7 +20,8 @@ Function New-Directory([string]$Name) {
 }
 
 # Source location shortcuts
-Function Enter-GitHubLocation { Enter-SourceLocation -Provider "GitHub" -Path $Global:SourceLocation }
+Function Enter-DefaultSourceLocation { Enter-SourceLocation -Provider "Default" -Path $Global:SourceLocation }
+Function Enter-GitHubLocation { Enter-SourceLocation -Provider "GitHub" -Path $Global:GitHubSourceLocation }
 Function Enter-AzureDevOpsLocation { Enter-SourceLocation -Provider "Azure DevOps" -Path $Global:AzureDevOpsSourceLocation }
 Function Enter-BitBucketLocation { Enter-SourceLocation -Provider "BitBucket" -Path $Global:BitBucketSourceLocation }
 Function Enter-GitLabLocation { Enter-SourceLocation -Provider "GitLab" -Path $Global:GitLabSourceLocation }
@@ -60,11 +33,6 @@ Function Enter-SourceLocation([string]$Provider, [string]$Path) {
     Set-Location $Path
 }
 
-# Set window title
-Function Set-WindowTitle([string]$Title) {
-    $host.ui.RawUI.WindowTitle = $Title
-}
-
 # For fun
 Function Get-DadJoke {
     # Created by @steviecoaster
@@ -74,16 +42,15 @@ Function Get-DadJoke {
 }
 
 # Aliases
-Set-Alias open start
-Set-Alias ccl Copy-CurrentLocation
+Set-Alias gs Enter-DefaultSourceLocation
 Set-Alias github Enter-GitHubLocation
-Set-Alias gs Enter-GitHubLocation
 Set-Alias azure Enter-AzureDevOpsLocation
 Set-Alias bitbucket Enter-BitBucketLocation
 Set-Alias gitlab Enter-GitLabLocation
-Set-Alias mcd New-Directory
-Set-Alias back popd
-Set-Alias sw Set-WindowTitle
-Set-Alias f Find-Files
-Set-Alias dad-joke Get-DadJoke
+
+Set-Alias open start
 Set-Alias sudo gsudo
+Set-Alias ccl Copy-CurrentLocation
+Set-Alias mcd New-Directory
+
+Set-Alias dad-joke Get-DadJoke

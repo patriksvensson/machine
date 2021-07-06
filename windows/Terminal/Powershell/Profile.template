@@ -21,6 +21,21 @@ if(!$WorkingDirSpecified) {
 
 Clear-Host
 
+# Load PSReadLine
+$Global:PSReadLineInstalled = (Get-Module -ListAvailable -Name PSReadLine)
+if ($Global:PSReadLineInstalled) {
+    Write-Host "Initializing PSReadLine... " -NoNewline
+    Import-Module PSReadLine
+    Set-PSReadLineOption -PredictionSource History
+    Set-PSReadLineOption -PredictionViewStyle ListView
+    Set-PSReadLineOption -EditMode Windows
+    Set-PSReadLineOption -Colors @{ InlinePrediction = "$([char]0x1b)[36;7;238m"}
+    Write-Host "Done!" -ForegroundColor Green
+}
+else {
+    Write-Host "The PSReadLine module has not been installed." -ForegroundColor Red
+}
+
 # Load Posh-git
 $Global:PoshGitInstalled = (Get-Module -ListAvailable -Name posh-git)
 if ($Global:PoshGitInstalled) {

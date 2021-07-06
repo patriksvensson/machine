@@ -70,6 +70,10 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes powertoys
     choco upgrade --cache="$ChocoCachePath" --yes ncrunch-vs2019
     choco upgrade --cache="$ChocoCachePath" --yes streamdeck
+    choco upgrade --cache="$ChocoCachePath" --yes epicgameslauncher
+    choco upgrade --cache="$ChocoCachePath" --yes playnite
+    choco upgrade --cache="$ChocoCachePath" --yes sql-server-management-studio
+    choco upgrade --cache="$ChocoCachePath" --yes repoz
 }
 
 ##########################################################################

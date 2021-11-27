@@ -63,12 +63,12 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes cmake
     choco upgrade --cache="$ChocoCachePath" --yes curl
     choco upgrade --cache="$ChocoCachePath" --yes vscode
-    choco upgrade --cache="$ChocoCachePath" --yes visualstudio2019professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
+    choco upgrade --cache="$ChocoCachePath" --yes visualstudio2022professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
     choco upgrade --cache="$ChocoCachePath" --yes dotpeek --pre
     choco upgrade --cache="$ChocoCachePath" --yes zoom
     choco upgrade --cache="$ChocoCachePath" --yes poshgit
     choco upgrade --cache="$ChocoCachePath" --yes powertoys
-    choco upgrade --cache="$ChocoCachePath" --yes ncrunch-vs2019
+    choco upgrade --cache="$ChocoCachePath" --yes ncrunch-vs2022
     choco upgrade --cache="$ChocoCachePath" --yes streamdeck
     choco upgrade --cache="$ChocoCachePath" --yes epicgameslauncher
     choco upgrade --cache="$ChocoCachePath" --yes playnite

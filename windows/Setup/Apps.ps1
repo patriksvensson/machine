@@ -51,10 +51,7 @@ choco upgrade --cache="$ChocoCachePath" --yes winsnap
 choco upgrade --cache="$ChocoCachePath" --yes gsudo
 
 if(!$IsArm) {
-    # x86/x64 only
-    choco upgrade --cache="$ChocoCachePath" --yes steam
-    choco upgrade --cache="$ChocoCachePath" --yes uplay
-    choco upgrade --cache="$ChocoCachePath" --yes spotify
+    # x86/x64 only    
     choco upgrade --cache="$ChocoCachePath" --yes nugetpackageexplorer
     choco upgrade --cache="$ChocoCachePath" --yes docker-for-windows
     choco upgrade --cache="$ChocoCachePath" --yes geforce-experience
@@ -65,15 +62,15 @@ if(!$IsArm) {
     choco upgrade --cache="$ChocoCachePath" --yes vscode
     choco upgrade --cache="$ChocoCachePath" --yes visualstudio2022professional --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --norestart --passive --locale en-US"
     choco upgrade --cache="$ChocoCachePath" --yes dotpeek --pre
-    choco upgrade --cache="$ChocoCachePath" --yes zoom
     choco upgrade --cache="$ChocoCachePath" --yes poshgit
     choco upgrade --cache="$ChocoCachePath" --yes powertoys
-    choco upgrade --cache="$ChocoCachePath" --yes ncrunch-vs2022
-    choco upgrade --cache="$ChocoCachePath" --yes streamdeck
-    choco upgrade --cache="$ChocoCachePath" --yes epicgameslauncher
-    choco upgrade --cache="$ChocoCachePath" --yes playnite
     choco upgrade --cache="$ChocoCachePath" --yes sql-server-management-studio
-    choco upgrade --cache="$ChocoCachePath" --yes repoz
+
+    # Move this to separate installer
+    choco upgrade --cache="$ChocoCachePath" --yes steam
+    choco upgrade --cache="$ChocoCachePath" --yes uplay
+    choco upgrade --cache="$ChocoCachePath" --yes streamdeck
+    choco upgrade --cache="$ChocoCachePath" --yes epicgameslauncher        
 }
 
 ##########################################################################

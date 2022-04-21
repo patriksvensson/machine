@@ -1,96 +1,86 @@
 {
-    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh3/main/themes/schema.json",
-    "final_space": true,
-    "blocks": [
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "type": "newline"
+    },
+    {
+      "alignment": "left",
+      "segments": [
         {
-            "type": "newline"
+          "foreground": "red",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "root_icon": "\uf0e7"
+          },
+          "style": "plain",
+          "template": "\uf0e7 ",
+          "type": "root"
         },
         {
-            "type": "prompt",
-            "alignment": "left",
-            "segments": [
-                {
-                    "type": "root",
-                    "style": "plain",
-                    "powerline_symbol": "\uE0B0",
-                    "foreground": "red",
-                    "properties": {
-                        "prefix": "",
-                        "postfix": " ",
-                        "root_icon": "\uF0E7"
-                    }
-                },
-                {
-                    "type": "path",
-                    "style": "plain",
-                    "foreground": "blue",
-                    "properties": {
-                        "prefix": "",
-                        "postfix": "",
-                        "home_icon": "\uF7DB",
-                        "folder_icon": "\uE5FF",
-                        "folder_separator_icon": "/",
-                        "style": "agnoster"
-                    }
-                },
-                {
-                    "type": "git",
-                    "style": "plain",
-                    "foreground": "green",
-                    "properties": {
-                        "display_status": true,
-                        "prefix": " on ",
-                        "postfix": "",
-                        "ahead_color": "red",
-                        "behind_color": "green",
-                        "working_color": "red",
-                        "staging_color": "yellow",
-                        "local_changes_color": "yellow",
-                        "ahead_and_behind_color": "red",
-                        "color_background": false,
-                        "display_stash_count": true,
-                        "display_upstream_icon": true,
-                        "status_colors_enabled": true,
-                        "github_icon": " "
-                    }
-                },
-                {
-                    "type": "dotnet",
-                    "style": "plain",
-                    "foreground": "magenta",
-                    "properties": {
-                      "prefix": " [.NET] "
-                    }
-                  }
-            ]
+          "foreground": "blue",
+          "properties": {
+            "folder_icon": "\ue5ff",
+            "folder_separator_icon": "/",
+            "home_icon": "\uf7db",
+            "style": "agnoster"
+          },
+          "style": "plain",
+          "template": "{{ .Path }}",
+          "type": "path"
         },
         {
-            "type": "newline"
+          "foreground": "green",
+          "foreground_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}red{{ end }}",
+            "{{ if gt .Ahead 0 }}green{{ end }}",
+            "{{ if gt .Behind 0 }}red{{ end }}"
+          ],
+          "properties": {
+            "fetch_stash_count": true,
+            "fetch_status": true,
+            "fetch_upstream_icon": true,
+            "github_icon": "\uf408 "
+          },
+          "style": "plain",
+          "template": " on {{ .HEAD }} {{ .BranchStatus }}{{ if .Working.Changed }} \uf044 <red>{{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 <yellow>{{ .Staging.String }}</>{{ end }}{{ if gt .StashCount 0}} \uf692 {{ .StashCount }}{{ end }}{{ if gt .WorktreeCount 0}} \uf1bb {{ .WorktreeCount }}{{ end }}",
+          "type": "git"
         },
         {
-            "type": "prompt",
-            "alignment": "left",
-            "segments": [
-                {
-                    "type": "time",
-                    "style": "plain",
-                    "foreground": "yellow",
-                    "properties": {
-                        "prefix": "",
-                        "time_format": "15:04:05"
-                    }
-                },
-                {
-                    "type": "text",
-                    "style": "plain",
-                    "foreground": "green",
-                    "properties": {
-                        "prefix": "",
-                        "postfix": "",
-                        "text": "\u276F"
-                    }
-                }
-            ]
+          "foreground": "magenta",
+          "style": "plain",
+          "template": " [.NET] {{ if .Unsupported }}\uf071{{ else }}{{ .Full }}{{ end }} ",
+          "type": "dotnet"
         }
-    ]
+      ],
+      "type": "prompt"
+    },
+    {
+      "type": "newline"
+    },
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "foreground": "yellow",
+          "properties": {
+            "time_format": "15:04:05"
+          },
+          "style": "plain",
+          "template": "{{ .CurrentDate | date .Format }} ",
+          "type": "time"
+        },
+        {
+          "foreground": "green",
+          "style": "plain",
+          "template": "\u276f",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 2
 }

@@ -33,6 +33,10 @@ Function Enter-SourceLocation([string]$Provider, [string]$Path) {
     Set-Location $Path
 }
 
+Function View-On-GitHub {
+    &gh repo view --web
+}
+
 # For fun
 Function Get-DadJoke {
     # Created by @steviecoaster
@@ -52,5 +56,6 @@ Set-Alias open start
 Set-Alias sudo gsudo
 Set-Alias ccl Copy-CurrentLocation
 Set-Alias mcd New-Directory
+Set-Alias ghv View-On-GitHub
 
 Set-Alias dad-joke Get-DadJoke

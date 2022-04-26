@@ -48,6 +48,17 @@ else {
     Write-Host "The posh-git module has not been installed." -ForegroundColor Red
 }
 
+# Load Terminal-icons
+$Global:TerminalIconsInstalled = (Get-Module -ListAvailable -Name Terminal-Icons)
+if ($Global:TerminalIconsInstalled) {
+    Write-Host "Initializing terminal-icons... " -NoNewline
+    Import-Module -Name Terminal-Icons
+    Write-Host "Done!" -ForegroundColor Green
+}
+else {
+    Write-Host "The Terminal-Icons module has not been installed." -ForegroundColor Red
+}
+
 $Global:LOCALPROFILE = "<<LOCALPROFILE>>"
 if (Test-Path $Global:LOCALPROFILE) {
     Write-Host "Initializing local profile... " -NoNewline

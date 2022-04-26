@@ -170,6 +170,12 @@ if(!$IsArm) {
 PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
 
 ##########################################################################
+# Install terminal icons
+##########################################################################
+
+PowerShellGet\Install-Module -Name Terminal-Icons -Repository PSGallery
+
+##########################################################################
 # Restore Temporary Settings
 ##########################################################################
 

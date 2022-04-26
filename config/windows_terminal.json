@@ -1,90 +1,67 @@
 {
+    "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "alwaysShowTabs": true,
-    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-    "initialCols": 120,
-    "initialRows": 40,
-    "keybindings": 
+    "actions": 
     [
         {
-            "command": "commandPalette",
-            "keys": 
-            [
-                "ctrl+shift+p"
-            ]
-        },
-        {
-            "command": "newTab",
-            "keys": 
-            [
-                "ctrl+t"
-            ]
-        },
-        {
-            "command": "closeTab",
-            "keys": 
-            [
-                "ctrl+w"
-            ]
-        },
-        {
-            "command": "closePane",
-            "keys": 
-            [
-                "ctrl+shift+d"
-            ]
-        },
-        {
-            "command": "copy",
-            "keys": 
-            [
-                "ctrl+c"
-            ]
-        },
-        {
-            "command": "paste",
-            "keys": 
-            [
-                "ctrl+v"
-            ]
-        },
-        {
             "command": 
             {
-                "action": "splitPane",
-                "split": "horizontal"
+                "action": "commandPalette"
             },
-            "keys": "ctrl+shift+-"
+            "keys": "ctrl+shift+p"
+        },
+        {
+            "command": 
+            {
+                "action": "copy"
+            },
+            "keys": "ctrl+c"
         },
         {
             "command": 
             {
                 "action": "splitPane",
-                "split": "vertical"
+                "split": "right"
             },
             "keys": "ctrl+shift+<"
         },
         {
             "command": 
             {
-                "action": "moveFocus",
-                "direction": "down"
+                "action": "newTab"
             },
-            "keys": 
-            [
-                "ctrl+down"
-            ]
+            "keys": "ctrl+t"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "down"
+            },
+            "keys": "ctrl+shift+minus"
+        },
+        {
+            "command": 
+            {
+                "action": "closeTab"
+            },
+            "keys": "ctrl+w"
+        },
+        {
+            "command": "closePane",
+            "keys": "ctrl+shift+d"
         },
         {
             "command": 
             {
                 "action": "moveFocus",
-                "direction": "left"
+                "direction": "down"
             },
-            "keys": 
-            [
-                "ctrl+left"
-            ]
+            "keys": "ctrl+down"
         },
         {
             "command": 
@@ -92,10 +69,15 @@
                 "action": "moveFocus",
                 "direction": "right"
             },
-            "keys": 
-            [
-                "ctrl+right"
-            ]
+            "keys": "ctrl+right"
+        },
+        {
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "left"
+            },
+            "keys": "ctrl+left"
         },
         {
             "command": 
@@ -103,21 +85,7 @@
                 "action": "moveFocus",
                 "direction": "up"
             },
-            "keys": 
-            [
-                "ctrl+up"
-            ]
-        },
-        {
-            "command": 
-            {
-                "action": "resizePane",
-                "direction": "down"
-            },
-            "keys": 
-            [
-                "ctrl+shift+down"
-            ]
+            "keys": "ctrl+up"
         },
         {
             "command": 
@@ -125,10 +93,15 @@
                 "action": "resizePane",
                 "direction": "left"
             },
-            "keys": 
-            [
-                "ctrl+shift+left"
-            ]
+            "keys": "ctrl+shift+left"
+        },
+        {
+            "command": 
+            {
+                "action": "resizePane",
+                "direction": "down"
+            },
+            "keys": "ctrl+shift+down"
         },
         {
             "command": 
@@ -136,10 +109,7 @@
                 "action": "resizePane",
                 "direction": "right"
             },
-            "keys": 
-            [
-                "ctrl+shift+right"
-            ]
+            "keys": "ctrl+shift+right"
         },
         {
             "command": 
@@ -147,20 +117,24 @@
                 "action": "resizePane",
                 "direction": "up"
             },
-            "keys": 
-            [
-                "ctrl+shift+up"
-            ]
+            "keys": "ctrl+shift+up"
         }
     ],
+    "alwaysShowTabs": true,
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "initialCols": 120,
+    "initialRows": 40,
     "profiles": 
     {
         "defaults": 
         {
-            "acrylicOpacity": 0.90000000000000002,
             "colorScheme": "Tomorrow Night",
-            "fontFace": "CaskaydiaCove Nerd Font Mono",
-            "fontSize": 12,
+            "font": 
+            {
+                "face": "CaskaydiaCove Nerd Font Mono",
+                "size": 12
+            },
+            "opacity": 90,
             "scrollbarState": "visible",
             "snapOnInput": true,
             "useAcrylic": false
@@ -169,16 +143,20 @@
         [
             {
                 "background": "#222632",
-                "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/powershell.png",
+                "backgroundImage": null,
                 "backgroundImageAlignment": "bottomRight",
                 "backgroundImageOpacity": 0.25,
                 "backgroundImageStretchMode": "none",
-                "commandline": "powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "name": "Windows PowerShell"
             },
             {
-                "commandline": "cmd.exe",
+                "guid": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
+                "hidden": false,
+                "name": "Nu Shell",
+                "commandline": "nu.exe"
+            },
+            {
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": true,
                 "name": "cmd"
@@ -200,21 +178,12 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/ubuntu.png",
-                "backgroundImageAlignment": "bottomRight",
-                "backgroundImageOpacity": 0.25,
-                "backgroundImageStretchMode": "none",
-                "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
-                "hidden": false,
-                "name": "Ubuntu-18.04",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
                 "backgroundImage": "%WINDOWSTERMINAL_IMAGES%/rpi.png",
                 "backgroundImageAlignment": "bottomRight",
                 "backgroundImageOpacity": 0.25,
                 "backgroundImageStretchMode": "none",
                 "commandline": "ssh pi@192.168.1.185",
+                "guid": "{3b411f93-0df5-5bfd-b5df-c5f389b987bb}",
                 "hidden": false,
                 "icon": "%WINDOWSTERMINAL_ICONS%/rpi.png",
                 "name": "Raspberry Pi"
@@ -224,7 +193,11 @@
                 "commandline": "powershell.exe",
                 "cursorShape": "vintage",
                 "experimental.retroTerminalEffect": true,
-                "fontSize": 30,
+                "font": 
+                {
+                    "size": 30
+                },
+                "guid": "{2befd01a-47f4-5ce8-aa73-534af812d152}",
                 "name": "Presentation",
                 "padding": "8",
                 "scrollbarState": "hidden",
@@ -235,11 +208,45 @@
                 "commandline": "powershell.exe",
                 "cursorShape": "vintage",
                 "experimental.retroTerminalEffect": true,
-                "fontSize": 18,
+                "font": 
+                {
+                    "size": 18
+                },
+                "guid": "{a53d9fd7-54fb-5530-9e9f-32f1fb47b1a1}",
                 "name": "Demo",
                 "padding": "8",
                 "scrollbarState": "hidden",
                 "tabTitle": "Demo"
+            },
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": true,
+                "name": "Ubuntu",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
+            },
+            {
+                "guid": "{fcd6b045-e136-54d7-bfa1-5401d6b38def}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{6163b87d-3417-5059-a65d-85efc6289e5b}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{bf36b0f0-a502-54be-937e-a85d7646267e}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2017",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
@@ -497,6 +504,29 @@
             "selectionBackground": "#CCCCCC",
             "white": "#CCCCCC",
             "yellow": "#D3B026"
+        },
+        {
+            "background": "#300A24",
+            "black": "#171421",
+            "blue": "#0037DA",
+            "brightBlack": "#767676",
+            "brightBlue": "#08458F",
+            "brightCyan": "#2C9FB3",
+            "brightGreen": "#26A269",
+            "brightPurple": "#A347BA",
+            "brightRed": "#C01C28",
+            "brightWhite": "#F2F2F2",
+            "brightYellow": "#A2734C",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#3A96DD",
+            "foreground": "#FFFFFF",
+            "green": "#26A269",
+            "name": "Ubuntu-ColorScheme",
+            "purple": "#881798",
+            "red": "#C21A23",
+            "selectionBackground": "#FFFFFF",
+            "white": "#CCCCCC",
+            "yellow": "#A2734C"
         },
         {
             "background": "#000000",

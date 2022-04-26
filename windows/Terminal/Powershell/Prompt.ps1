@@ -2,12 +2,6 @@
 $Global:WrapPrompt = $true;
 $Global:WindowTitle = $null;
 
-# Load PoSh-Git
-$Global:PoShGitInstalled = (Get-Module -ListAvailable -Name posh-git)
-if ($Global:PoShGitInstalled) {
-    Import-Module posh-git
-}
-
 # The prompt
 Function Global:Prompt() {
     # Store the last exit code

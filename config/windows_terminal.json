@@ -134,7 +134,7 @@
                 "face": "CaskaydiaCove Nerd Font Mono",
                 "size": 12
             },
-            "opacity": 90,
+            "opacity": 100,
             "scrollbarState": "visible",
             "snapOnInput": true,
             "useAcrylic": false

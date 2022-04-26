@@ -2,9 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "blocks": [
     {
-      "type": "newline"
-    },
-    {
+      "newline": true,
       "alignment": "left",
       "segments": [
         {
@@ -57,9 +55,7 @@
       "type": "prompt"
     },
     {
-      "type": "newline"
-    },
-    {
+      "newline": true,
       "alignment": "left",
       "segments": [
         {

@@ -4,6 +4,9 @@ $Global:AzureDevOpsSourceLocation = "<<AZURELOCATION>>"
 $Global:BitBucketSourceLocation = "<<BITBUCKETLOCATION>>"
 $Global:GitLabSourceLocation = "<<GITLABLOCATION>>"
 
+# Start the stopwatch
+$Stopwatch =  [system.diagnostics.stopwatch]::StartNew()
+
 # Set the output encoding
 [console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
@@ -66,15 +69,38 @@ if (Test-Path $Global:LOCALPROFILE) {
     Write-Host "Done!" -ForegroundColor Green
 }
 
-$Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture;
-$IsArm = $false;
-if($Architecture.StartsWith("ARM")) {
-    $IsArm = $true;
+$UpdateCheckedPath = "$($env:LOCALAPPDATA)\update-checked.txt"
+$Timespan = new-timespan -days 7
+if (((Test-Path $UpdateCheckedPath) -eq $false) -or ((get-date) - (Get-Item $UpdateCheckedPath).LastWriteTime -gt $Timespan))
+{
+  Write-Host
+  Write-Host "Been a minute since running global update checks. Doing that now."
+
+  Write-Host
+  Write-Host "Running npm -g outdated"
+  npm -g outdated
+
+  Write-Host
+  Write-Host "Running choco outdated"
+  choco outdated
+
+  Write-Host 
+  Write-Host "Running dotnet-tools-outdated"
+  dotnet tool install -g dotnet-tools-outdated
+  dotnet-tools-outdated
+
+  get-date | Out-File -FilePath $UpdateCheckedPath
 }
 
 if($env:PREFER_OLD_PROMPT) {
+    # Use home made prompt
     . "<<PROMPT>>"
 } else {
     # Initialize Oh-My-Posh
     Invoke-Expression (oh-my-posh --init --shell pwsh --config "<<MACHINE>>config\oh-my-posh.json")
 }
+
+# Output some stats
+Write-Host "Profile loaded in " -NoNewline
+Write-Host $Stopwatch.Elapsed.TotalMilliseconds -NoNewline -ForegroundColor Blue
+Write-Host " ms"

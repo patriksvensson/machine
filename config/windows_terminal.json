@@ -6,20 +6,6 @@
         {
             "command": 
             {
-                "action": "commandPalette"
-            },
-            "keys": "ctrl+shift+p"
-        },
-        {
-            "command": 
-            {
-                "action": "copy"
-            },
-            "keys": "ctrl+c"
-        },
-        {
-            "command": 
-            {
                 "action": "splitPane",
                 "split": "right"
             },
@@ -28,9 +14,9 @@
         {
             "command": 
             {
-                "action": "newTab"
+                "action": "copy"
             },
-            "keys": "ctrl+t"
+            "keys": "ctrl+c"
         },
         {
             "command": "paste",
@@ -47,13 +33,43 @@
         {
             "command": 
             {
+                "action": "commandPalette"
+            },
+            "keys": "ctrl+shift+p"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab"
+            },
+            "keys": "ctrl+t"
+        },
+        {
+            "command": 
+            {
                 "action": "closeTab"
             },
             "keys": "ctrl+w"
         },
         {
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "right"
+            },
+            "keys": "ctrl+right"
+        },
+        {
             "command": "closePane",
             "keys": "ctrl+shift+d"
+        },
+        {
+            "command": 
+            {
+                "action": "resizePane",
+                "direction": "left"
+            },
+            "keys": "ctrl+shift+left"
         },
         {
             "command": 
@@ -66,10 +82,10 @@
         {
             "command": 
             {
-                "action": "moveFocus",
-                "direction": "right"
+                "action": "resizePane",
+                "direction": "down"
             },
-            "keys": "ctrl+right"
+            "keys": "ctrl+shift+down"
         },
         {
             "command": 
@@ -86,22 +102,6 @@
                 "direction": "up"
             },
             "keys": "ctrl+up"
-        },
-        {
-            "command": 
-            {
-                "action": "resizePane",
-                "direction": "left"
-            },
-            "keys": "ctrl+shift+left"
-        },
-        {
-            "command": 
-            {
-                "action": "resizePane",
-                "direction": "down"
-            },
-            "keys": "ctrl+shift+down"
         },
         {
             "command": 
@@ -151,10 +151,10 @@
                 "name": "Windows PowerShell"
             },
             {
+                "commandline": "nu.exe",
                 "guid": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
                 "hidden": false,
-                "name": "Nu Shell",
-                "commandline": "nu.exe"
+                "name": "Nu Shell"
             },
             {
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -182,7 +182,7 @@
                 "backgroundImageAlignment": "bottomRight",
                 "backgroundImageOpacity": 0.25,
                 "backgroundImageStretchMode": "none",
-                "commandline": "ssh pi@192.168.1.185",
+                "commandline": "ssh pi@192.168.154.196",
                 "guid": "{3b411f93-0df5-5bfd-b5df-c5f389b987bb}",
                 "hidden": false,
                 "icon": "%WINDOWSTERMINAL_ICONS%/rpi.png",
@@ -247,6 +247,24 @@
                 "hidden": true,
                 "name": "Developer Command Prompt for VS 2017",
                 "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{1f1b0f9c-98fa-54d6-9595-2a3688d98770}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 2022 [Preview]",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{72496143-67cc-500d-8ac9-d13cb30ef59c}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022 [Preview]",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
+                "hidden": true,
+                "name": "Visual Studio Debug Console",
+                "source": "VSDebugConsole"
             }
         ]
     },

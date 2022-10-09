@@ -137,8 +137,7 @@
             "opacity": 100,
             "scrollbarState": "visible",
             "snapOnInput": true,
-            "useAcrylic": false,
-            "experimental.pixelShaderPath": "%WINDOWSTERMINAL_SHADERS%/happy.hlsl"
+            "useAcrylic": false
         },
         "list": 
         [
@@ -150,6 +149,12 @@
                 "backgroundImageStretchMode": "none",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "name": "Windows PowerShell"
+            },
+            {
+                "background": "#222632",
+                "guid": "{761DFFE9-59C8-42FC-9D49-C524992399A4}",
+                "name": "Trippy Windows PowerShell",
+                "experimental.pixelShaderPath": "%WINDOWSTERMINAL_SHADERS%/happy.hlsl"
             },
             {
                 "commandline": "nu.exe",

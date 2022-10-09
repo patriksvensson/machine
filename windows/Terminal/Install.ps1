@@ -89,6 +89,10 @@ if($All.IsPresent -or $WindowsTerminalProfile.IsPresent) {
     Write-Host "Setting environment 'WINDOWSTERMINAL_ICONS' variable..."
     $IconsPath = Join-Path $PWD "Icons";
     [Environment]::SetEnvironmentVariable("WINDOWSTERMINAL_ICONS", "$IconsPath", "User")
+
+    Write-Host "Setting environment 'WINDOWSTERMINAL_SHADERS' variable..."
+    $ShadersPath = Join-Path $PWD "Shaders";
+    [Environment]::SetEnvironmentVariable("WINDOWSTERMINAL_SHADERS", "$ShadersPath", "User")
 }
 
 #################################################################

@@ -38,6 +38,10 @@ install_cask slack
 install_cask discord
 install_cask marta
 install_cask spotify
+install_package bat
+install_package git-delta
+install_package eza
+install_package gh
 
 ########################################################
 # OH-MY-POSH

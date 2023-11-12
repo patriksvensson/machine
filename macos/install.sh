@@ -43,6 +43,7 @@ install_package git-delta
 install_package eza
 install_package gh
 install_package gitui
+install_cask unnaturalscrollwheels
 
 ########################################################
 # OH-MY-POSH

@@ -44,6 +44,7 @@ install_package eza
 install_package gh
 install_package gitui
 install_cask unnaturalscrollwheels
+install_package swift-format
 
 ########################################################
 # OH-MY-POSH

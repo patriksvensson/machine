@@ -40,12 +40,15 @@ install_package gitui
 install_package powershell
 install_package atuin
 install_package lazydocker
+install_package node
 install_cask ghostty
 install_cask unnaturalscrollwheels
 install_cask visual-studio-code
 install_cask iterm2
 install_cask slack
 install_cask discord
+install_cask mattermost
+install_cask raycast
 
 ########################################################
 # OH-MY-POSH

@@ -32,19 +32,20 @@ install_package () {
 
 install_package coreutils
 install_package ripgrep
-install_cask visual-studio-code
-install_cask iterm2
-install_cask slack
-install_cask discord
-install_cask marta
-install_cask spotify
 install_package bat
 install_package git-delta
 install_package eza
 install_package gh
 install_package gitui
+install_package powershell
+install_package atuin
+install_package lazydocker
+install_cask ghostty
 install_cask unnaturalscrollwheels
-install_package swift-format
+install_cask visual-studio-code
+install_cask iterm2
+install_cask slack
+install_cask discord
 
 ########################################################
 # OH-MY-POSH

@@ -1,0 +1,74 @@
+[core]
+    pager = delta
+    fsmonitor = true
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    features = decorations
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067A00"
+    hunk-header-style = file line-number syntax
+
+[merge]
+    conflictstyle = diff3
+    keepbackup = false
+
+[diff]
+    colorMoved = default
+    algorithm = histogram
+
+[user]
+    name = Patrik Svensson
+    email = patrik@patriksvensson.se
+
+[push]
+    autosetupremote = true
+    followtags = true
+
+[init]
+    defaultBranch = main
+
+[commit]
+    verbose = true
+
+[help]
+    autocorrect = prompt
+
+[url "git@github.com:"]
+    insteadOf = "https://github.com/"
+
+[url "git@github.com:"]
+    insteadOf = "gh:"
+
+[log]
+    date = iso
+
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = taggerdate
+
+[alias]
+    fomo = !git fetch origin main && git rebase origin/main
+    fomo-master = !git fetch origin master && git rebase origin/master
+    adog = log --all --decorate --oneline --graph
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

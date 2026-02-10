@@ -20,7 +20,7 @@
           "options": {
             "folder_icon": "\uf114 ",
             "folder_separator_icon": "/",
-            "home_icon": "\uf46d",
+            "home_icon": "\uf46d ",
             "style": "agnoster"
           },
           "template": "{{ .Path }}",

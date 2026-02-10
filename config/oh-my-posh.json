@@ -6,7 +6,7 @@
       "alignment": "left",
       "segments": [
         {
-          "properties": {
+          "options": {
             "cache_duration": "none",
             "root_icon": "\uf0e7"
           },
@@ -17,9 +17,8 @@
           "style": "plain"
         },
         {
-          "properties": {
-            "cache_duration": "none",
-            "folder_icon": "\ue5ff",
+          "options": {
+            "folder_icon": "\uf114 ",
             "folder_separator_icon": "/",
             "home_icon": "\uf46d",
             "style": "agnoster"
@@ -30,9 +29,7 @@
           "style": "plain"
         },
         {
-          "properties": {
-            "cache_duration": "none",
-            "fetch_stash_count": true,
+          "options": {
             "fetch_status": true,
             "fetch_upstream_icon": true,
             "github_icon": "\uf408 "
@@ -49,10 +46,10 @@
           ]
         },
         {
-          "properties": {
+          "options": {
             "cache_duration": "none"
           },
-          "template": " [.NET] {{ if .Unsupported }}\uf071{{ else }}{{ .Full }}{{ end }} ",
+          "template": "  {{ if .Unsupported }}\uf071{{ else }}{{ .Full }}{{ end }} ",
           "foreground": "magenta",
           "type": "dotnet",
           "style": "plain"
@@ -64,9 +61,29 @@
       "type": "prompt",
       "alignment": "left",
       "segments": [
+       {
+          "type": "connection",
+          "style": "plain",
+          "template": "{{ if eq .Type \"wifi\"}}\udb81\udda9{{ else if eq .Type \"ethernet\"}}\ueba9{{ end }}  "
+        },
+         {
+          "type": "battery",
+          "style": "plain",
+          "template": "{{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }} ",
+          "foreground_templates": [
+            "{{if eq \"Charging\" .State.String}}orange{{end}}",
+            "{{if eq \"Discharging\" .State.String}}red{end}}",
+            "{{if eq \"Full\" .State.String}}green{{end}}"
+          ],
+          "options": {
+            "discharging_icon": "\udb80\udc7e",
+            "charging_icon": "\udb82\udc9d",
+            "charged_icon": "\udb80\udc84",
+            "not_charging_icon": "\udb80\udc79"
+          }
+        },
         {
-          "properties": {
-            "cache_duration": "none",
+          "options": {
             "time_format": "15:04:05"
           },
           "template": "{{ .CurrentDate | date .Format }} ",
@@ -75,7 +92,7 @@
           "style": "plain"
         },
         {
-          "properties": {
+          "options": {
             "cache_duration": "none"
           },
           "template": "❯",
